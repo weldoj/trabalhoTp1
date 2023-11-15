@@ -11,14 +11,14 @@ import java.util.List;
 //import javax.swing.event.ListSelectionEvent;
 //import javax.swing.event.ListSelectionListener;
 import trabalhofinal.Cardapio;
-//import classes.CardapioInfo;
-//
+import trabalhofinal.itemCardapio;
+
 
 public class TelaCardapio extends javax.swing.JFrame {
 
     private DefaultListModel<String> cardapioListModel;
     private List<Cardapio> cardapios;
-    //private List<CardapioInfo> cardapioInfoList;
+    
 
     
     
@@ -26,28 +26,12 @@ public class TelaCardapio extends javax.swing.JFrame {
     public TelaCardapio() {
         initComponents();
         cardapioListModel = new DefaultListModel<>();
-       //listaCardapio = new JList<>(cardapioListModel);
-        //jScrollPane3.setViewportView(listaCardapio);
+       
         
         listaCardapio.setModel(cardapioListModel);
 
         cardapios = new ArrayList<>();
-        //cardapioInfoList = new ArrayList<>();
-         
-       
         
-        // Adicione um ListSelectionListener à lista de cardápios
-       /* listaCardapio.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedIndex = listaCardapio.getSelectedIndex();
-                    if (selectedIndex != -1) {
-                        atualizarTabela(cardapios.get(selectedIndex));
-                    }
-                }
-            }
-        });*/
         
     }
     
@@ -64,7 +48,7 @@ public class TelaCardapio extends javax.swing.JFrame {
         lblNome = new javax.swing.JLabel();
         txtNomeCardapio = new javax.swing.JTextField();
         btnExcluirCardapio = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCadastrarItens = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de cardapios");
@@ -92,11 +76,11 @@ public class TelaCardapio extends javax.swing.JFrame {
         btnExcluirCardapio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/excluirCardapio.png"))); // NOI18N
         btnExcluirCardapio.setText("Excluir Cardapio");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadastrar.png"))); // NOI18N
-        jButton1.setText("Cadastrar itens");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrarItens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadastrar.png"))); // NOI18N
+        btnCadastrarItens.setText("Cadastrar itens");
+        btnCadastrarItens.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCadastrarItensActionPerformed(evt);
             }
         });
 
@@ -111,7 +95,7 @@ public class TelaCardapio extends javax.swing.JFrame {
                 .addComponent(lblNome)
                 .addGap(18, 18, 18)
                 .addGroup(pnlCardapioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarItens, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(btnExcluirCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(btnAdicionarCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(txtNomeCardapio))
@@ -130,7 +114,7 @@ public class TelaCardapio extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addComponent(btnExcluirCardapio)
                         .addGap(29, 29, 29)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCadastrarItens, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlCardapioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -160,20 +144,14 @@ public class TelaCardapio extends javax.swing.JFrame {
 
     private void btnAdicionarCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarCardapioActionPerformed
 
-        /*String nomeCardapio = txtNomeCardapio.getText();
-                if (!nomeCardapio.isEmpty()) {
-                    cardapioListModel.addElement(nomeCardapio);
-                    // Aqui você pode criar uma instância de um objeto Cardapio com o nome e fazer a gestão.
-                    txtNomeCardapio.setText(""); // Limpa o campo após adicionar.*/
+        
                                                       
         String nomeCardapio = txtNomeCardapio.getText();
         if (!nomeCardapio.isEmpty()) {
             Cardapio cardapio = new Cardapio(nomeCardapio);
             cardapios.add(cardapio);
 
-            // Crie uma lista de informações do cardápio para o novo cardápio
-            //List<CardapioInfo> novoCardapioInfoList = new ArrayList<>();
-            //cardapio.setCardapioInfoList(novoCardapioInfoList);
+            
 
             cardapioListModel.addElement(nomeCardapio);
             txtNomeCardapio.setText("");
@@ -185,20 +163,11 @@ public class TelaCardapio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeCardapioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCadastrarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarItensActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCadastrarItensActionPerformed
 
-   /*private void atualizarTabela(Cardapio cardapio) {
-        tabelaModel.setRowCount(0); // Limpa a tabela
-
-        if (cardapio != null) {
-            for (CardapioInfo cardapioInfo : cardapio.getCardapioInfoList()) {
-                tabelaModel.addRow(new Object[]{cardapioInfo.getNomeItem(), cardapioInfo.getReceita()});
-        }
-    }
-}
-*/
+   
 
     /**
      * @param args the command line arguments
@@ -237,8 +206,8 @@ public class TelaCardapio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarCardapio;
+    private javax.swing.JButton btnCadastrarItens;
     private javax.swing.JButton btnExcluirCardapio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblNome;
     private javax.swing.JList<String> listaCardapio;
