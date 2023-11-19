@@ -15,14 +15,19 @@ public class TelaEstoque extends javax.swing.JFrame {
     
     private String tipoAlimentoSelecionado = "";
     
+   
+   
+    
     
     public TelaEstoque() {
         initComponents();
+        // inicializando tabela
         tableModel = (DefaultTableModel) tabela.getModel();
         
-        
+
        listaDeProdutos = new ArrayList();
        
+       // campos desabilitados
        txtNome.setEnabled(false);
        txtCodigo.setEnabled(false);
        txtCusto.setEnabled(false);
@@ -31,17 +36,22 @@ public class TelaEstoque extends javax.swing.JFrame {
        txtUnidade.setEnabled(false);
        txtValidade.setEnabled(false);
        
+       // Desabilitar botoes
        btnCarnes.setEnabled(false);
        btnBebidas.setEnabled(false);
        btnGraoseCereais.setEnabled(false);
        btnProdutosDePadaria.setEnabled(false);
        btnProdutosLacteos.setEnabled(false);
        btnVegetais.setEnabled(false);
+       btnExcluir.setEnabled(false);
+       btnEditar.setEnabled(false);
+       btnSalvar.setEnabled(false);
        
-       
+       cbxUnidade.setSelectedItem(null);
        
         
        }
+    // mostrar objetos da classe estouqe na tabela
     public void carregarTabelaProdutos(String tipoAlimento) {
         tableModel.setRowCount(0); // Limpa a tabela
 
@@ -195,8 +205,7 @@ public class TelaEstoque extends javax.swing.JFrame {
                     .addGroup(pnlTiposDeAlimentoLayout.createSequentialGroup()
                         .addComponent(btnProdutosLacteos)
                         .addGap(148, 148, 148)
-                        .addComponent(btnVegetais)))
-                .addGap(61, 61, 61))
+                        .addComponent(btnVegetais))))
         );
         pnlTiposDeAlimentoLayout.setVerticalGroup(
             pnlTiposDeAlimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +290,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             }
         });
 
-        cbxUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "g", "kg", "ml", "litros" }));
         cbxUnidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxUnidadeActionPerformed(evt);
@@ -316,7 +325,7 @@ public class TelaEstoque extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbxUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(snrQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addGap(224, 224, 224))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -440,20 +449,24 @@ public class TelaEstoque extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -463,20 +476,21 @@ public class TelaEstoque extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlTiposDeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(pnlTiposDeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(pnlTiposDeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -484,10 +498,11 @@ public class TelaEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVegetaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVegetaisActionPerformed
-        //carregarDadosTabelaVegetais();
+        
         tipoAlimentoSelecionado = "Vegetais";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -504,14 +519,26 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnCarnes.setEnabled(false);
+       btnBebidas.setEnabled(false);
+       btnGraoseCereais.setEnabled(false);
+       btnProdutosDePadaria.setEnabled(false);
+       btnProdutosLacteos.setEnabled(false);
+       
         
     }//GEN-LAST:event_btnVegetaisActionPerformed
 
     private void btnGraoseCereaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraoseCereaisActionPerformed
-        //carregarDadosTabelaGraosCereais();
+        
         tipoAlimentoSelecionado = "GraoseCereais";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -528,6 +555,16 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnCarnes.setEnabled(false);
+       btnBebidas.setEnabled(false);
+       btnVegetais.setEnabled(false);
+       btnProdutosDePadaria.setEnabled(false);
+       btnProdutosLacteos.setEnabled(false);
         
     }//GEN-LAST:event_btnGraoseCereaisActionPerformed
 
@@ -536,6 +573,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         tipoAlimentoSelecionado = "Carnes";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -552,6 +590,16 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnGraoseCereais.setEnabled(false);
+       btnBebidas.setEnabled(false);
+       btnGraoseCereais.setEnabled(false);
+       btnProdutosDePadaria.setEnabled(false);
+       btnProdutosLacteos.setEnabled(false);
     }//GEN-LAST:event_btnCarnesActionPerformed
 
     private void btnProdutosLacteosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosLacteosActionPerformed
@@ -559,6 +607,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         tipoAlimentoSelecionado = "ProdutosLacteos";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -575,6 +624,16 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnVegetais.setEnabled(false);
+       btnBebidas.setEnabled(false);
+       btnGraoseCereais.setEnabled(false);
+       btnProdutosDePadaria.setEnabled(false);
+       btnCarnes.setEnabled(false);
     }//GEN-LAST:event_btnProdutosLacteosActionPerformed
 
     private void btnBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBebidasActionPerformed
@@ -582,6 +641,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         tipoAlimentoSelecionado = "Bebidas";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -598,6 +658,16 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnCarnes.setEnabled(false);
+       btnProdutosLacteos.setEnabled(false);
+       btnGraoseCereais.setEnabled(false);
+       btnProdutosDePadaria.setEnabled(false);
+       btnVegetais.setEnabled(false);
         
     }//GEN-LAST:event_btnBebidasActionPerformed
 
@@ -606,6 +676,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         tipoAlimentoSelecionado = "ProdutosDePadaria";
         carregarTabelaProdutos(tipoAlimentoSelecionado);
         
+        // campos habilitados
         txtNome.setEnabled(true);
         txtCodigo.setEnabled(true);
         txtCusto.setEnabled(true);
@@ -622,6 +693,18 @@ public class TelaEstoque extends javax.swing.JFrame {
         txtValidade.setText("");
         txtCusto.setText("");
         txtCodigo.setText("");
+        
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        // Habilitar botoes
+        btnSalvar.setEnabled(true);
+        
+        // Desabilitar botoes
+       btnCarnes.setEnabled(false);
+       btnBebidas.setEnabled(false);
+       btnGraoseCereais.setEnabled(false);
+       btnProdutosLacteos.setEnabled(false);
+       btnVegetais.setEnabled(false);
     }//GEN-LAST:event_btnProdutosDePadariaActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
@@ -640,7 +723,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         else {
             
             String textoCampo = txtUnidade.getText(); 
-            String itemSelecionado = (String) cbxUnidade.getSelectedItem(); 
+            Object itemSelecionado = (String) cbxUnidade.getSelectedItem(); 
             
         
             String nome = txtNome.getText();
@@ -654,7 +737,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             // Adicionar o código para criar e definir o tipo de alimento aqui
             String tipoAlimentoSelecionado = obterTipoAlimentoSelecionado(); 
 
-
+            // Metodo construtor
             Estoque estoque = new Estoque(codigo, nome, quantidade, unidade,  validade, custo);
             listaDeProdutos.add(estoque);
             
@@ -663,8 +746,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             
             
 
-            //carregar
-
+            //carregar tabela
             carregarTabelaProdutos(tipoAlimentoSelecionado); 
             
             //Limpar os campos
@@ -676,7 +758,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             txtCodigo.setText("");
             snrQuantidade.setValue(0);
             
-            
+            // Desabilitar campos 
             txtNome.setEnabled(false);
             txtCodigo.setEnabled(false);
             txtCusto.setEnabled(false);
@@ -685,19 +767,49 @@ public class TelaEstoque extends javax.swing.JFrame {
             txtUnidade.setEnabled(false);
             txtValidade.setEnabled(false);
             
+            // Desabilitar botoes
             btnCarnes.setEnabled(false);
             btnBebidas.setEnabled(false);
             btnGraoseCereais.setEnabled(false);
             btnProdutosDePadaria.setEnabled(false);
             btnProdutosLacteos.setEnabled(false);
             btnVegetais.setEnabled(false);
+            
+            // Habilitar botoes
+            btnAdicionar.setEnabled(true);
         }
         
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        int index = tabela.getSelectedRow();
+        
+        if (index>=0 && index<listaDeProdutos.size()) {
+            
+            listaDeProdutos.remove(index);
+            
+        }
+        carregarTabelaProdutos(tipoAlimentoSelecionado);
+        
+        // Habilitar campos
+        txtNome.setEnabled(true);
+        txtCodigo.setEnabled(true);
+        txtCusto.setEnabled(true);
+        snrQuantidade.setEnabled(true);
+        cbxUnidade.setEnabled(true);
+        txtUnidade.setEnabled(true);
+        txtValidade.setEnabled(true);
+        
+        //Limpar os campos
+        txtNome.setText("");
+        cbxUnidade.setSelectedItem(null);
+        txtUnidade.setText("");
+        snrQuantidade.setValue(0);
+        txtValidade.setText("");
+        txtCusto.setText("");
+        txtCodigo.setText("");
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -715,35 +827,44 @@ public class TelaEstoque extends javax.swing.JFrame {
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         int i =  tabela.getSelectedRow();
         
+        // mostrar dados da linha da tabela selecionada nos campos
         if (i >= 0 && i <listaDeProdutos.size()) {
+        
             Estoque est =  listaDeProdutos.get(i);
+            String unidade = est.getUnidade();
+            String[] partesUnidade = unidade.split(" ");
+            String objUnidade =  partesUnidade[1];
+        
             txtCodigo.setText(String.valueOf(est.getCodigo()));
             txtNome.setText(est.getNomeProduto());
             txtValidade.setText(est.getValidade());
             snrQuantidade.setValue(est.getQuantidade());
-            cbxUnidade.setSelectedItem(est.getUnidade());
+            txtUnidade.setText(partesUnidade[0]);
+            cbxUnidade.setSelectedItem(objUnidade);
             txtCusto.setText(String.valueOf(est.getCusto()));
-            
+           
             
         }
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-
+       // Habilitar botoes 
        btnCarnes.setEnabled(true);
        btnBebidas.setEnabled(true);
        btnGraoseCereais.setEnabled(true);
        btnProdutosDePadaria.setEnabled(true);
        btnProdutosLacteos.setEnabled(true);
        btnVegetais.setEnabled(true);
+       
+       btnAdicionar.setEnabled(false);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void cbxUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxUnidadeActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code h ere:
     }//GEN-LAST:event_cbxUnidadeActionPerformed
 
     private void txtUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidadeActionPerformed
@@ -755,12 +876,6 @@ public class TelaEstoque extends javax.swing.JFrame {
     }
 
         
-
-    
-
-   
-
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

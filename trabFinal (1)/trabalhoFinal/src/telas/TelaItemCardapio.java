@@ -4,17 +4,33 @@
  */
 package telas;
 
+import trabalhofinal.Cardapio;
+
 /**
  *
  * @author Caio Martins
  */
 public class TelaItemCardapio extends javax.swing.JFrame {
+    
+    private Cardapio cardapioAtual;
 
     /**
      * Creates new form TelaItemCardapio
      */
-    public TelaItemCardapio() {
+    public TelaItemCardapio(Cardapio cardapio) {
         initComponents();
+        this.cardapioAtual = cardapio;
+        // Inicialize os componentes da tela com as informações do cardápio
+        exibirInformacoesCardapio();
+    }
+
+    private TelaItemCardapio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    private void exibirInformacoesCardapio() {
+        // Atualize os componentes da tela com as informações do cardápio
+        
     }
 
     /**

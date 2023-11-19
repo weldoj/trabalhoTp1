@@ -2,14 +2,8 @@
 package telas;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-//import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
-//import javax.swing.event.ListSelectionEvent;
-//import javax.swing.event.ListSelectionListener;
 import trabalhofinal.Cardapio;
 import trabalhofinal.itemCardapio;
 
@@ -55,6 +49,11 @@ public class TelaCardapio extends javax.swing.JFrame {
 
         pnlCardapio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cardapios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Cantarell", 1, 15))); // NOI18N
 
+        listaCardapio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaCardapioMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(listaCardapio);
 
         btnAdicionarCardapio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/adicionarCardapio3.png"))); // NOI18N
@@ -166,6 +165,21 @@ public class TelaCardapio extends javax.swing.JFrame {
     private void btnCadastrarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarItensActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarItensActionPerformed
+
+    private void listaCardapioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaCardapioMouseClicked
+         // Verifique se algum item foi selecionado
+        if (evt.getClickCount() == 2) { // Verifica se foi um duplo clique
+        int selectedIndex = listaCardapio.getSelectedIndex();
+
+        if (selectedIndex != -1) {
+            Cardapio cardapioSelecionado = cardapios.get(selectedIndex);
+
+            TelaItemCardapio telaItemCardapio = new TelaItemCardapio(cardapioSelecionado);
+            telaItemCardapio.setVisible(true);
+        }
+    
+    }
+    }//GEN-LAST:event_listaCardapioMouseClicked
 
    
 
