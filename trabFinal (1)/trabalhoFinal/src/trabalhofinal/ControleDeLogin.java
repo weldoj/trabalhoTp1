@@ -10,18 +10,19 @@ import java.util.ArrayList;
 public  class ControleDeLogin {
     Pessoa pessoa = new Pessoa();    
     
-    public long cpfSalvoAdm(){
+    public String cpfSalvoAdm(){
         if (pessoa instanceof Administrador){
             return  pessoa.getCpf();
         }  
-        return 0;
+        return null;
+        
     }
     
-    public  ArrayList<Long> cpfSalvoFunc(){
+    public  ArrayList<String> cpfSalvoFunc(){
         if (pessoa instanceof Funcionarios){
             Funcionarios funcionarios = (Funcionarios) pessoa;
             ArrayList<Funcionarios> func = funcionarios.retornaLista();
-            ArrayList<Long> listaCpf = new ArrayList();
+            ArrayList<String> listaCpf = new ArrayList();
             for (int i=0; i < func.size(); i++){
                 Funcionarios funcionario = func.get(i);  
                 listaCpf.add(funcionario.getCpf()); 

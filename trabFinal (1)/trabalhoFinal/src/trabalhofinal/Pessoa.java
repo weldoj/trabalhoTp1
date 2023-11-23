@@ -4,12 +4,12 @@ public class Pessoa {
     private String nome;
     private String senha;
     private int id;
-    private long cpf;
+    private String cpf;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String senha, int id, long cpf) {
+    public Pessoa(String nome, String senha, int id, String cpf) {
         this.nome = nome;
         this.senha = senha;
         this.id = id;
@@ -40,11 +40,11 @@ public class Pessoa {
         this.id = id;
     }
 
-    public long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
     

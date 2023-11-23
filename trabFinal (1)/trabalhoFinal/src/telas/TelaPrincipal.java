@@ -175,54 +175,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarRestauranteActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        if ("adm".equals(quemE)){
-            if (nome == true){
-                if (senha == true){
+        if (txtCpf.getText().equals(controle.cpfSalvoAdm())
+            && txtNome.getText().equals(controle.nomeSalvoAdm())
+            && txtSenha.getText().equals(controle.senhaSalvoAdm())){
                     new Adm().setVisible(true);
                 }
-            }
             
-        }
-        else if ("funcionario".equals(quemE)){
-            if (nome == true){
-                if (senha == true){
+            
+        
+        else if (txtCpf.getText().equals((CharSequence) controle.cpfSalvoFunc())
+            && txtNome.getText().equals((CharSequence) controle.nomeSalvoFunc())
+            && txtSenha.getText().equals((CharSequence) controle.senhaSalvoFunc())){
                     new TelaPedido().setVisible(true);
                 }
-            }
-            
-        }
-        else{
-            //algo digitado errado
-        }
+                 
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
-        if (txtCpf.getText().equals(controle.cpfSalvoAdm())){
-            quemE = "adm";
-        }
-        else if (txtCpf.getText().contains((CharSequence) controle.cpfSalvoFunc())){
-            quemE = "func";  
-        }
+//        if (){
+//            quemE = "adm";
+//        }
+//        else if (){
+//            quemE = "func";  
+//        }
         
     }//GEN-LAST:event_txtCpfActionPerformed
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        if(txtNome.getText().equals(controle.senhaSalvoAdm())){
+ /**       if(){
             senha = true;
         }
-        else if (txtCpf.getText().contains((CharSequence) controle.senhaSalvoFunc())){
+        else if (){
             senha = false; 
-        }
+        }**/
     }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        if(txtNome.getText().equals(controle.nomeSalvoAdm())){
+      /**  if(){
             nome = true;
         }
-        else if (txtCpf.getText().contains((CharSequence) controle.cpfSalvoFunc())){
+        else if (){
             nome = false; 
         }
-        
+        **/
     }//GEN-LAST:event_txtNomeActionPerformed
 
     /**
