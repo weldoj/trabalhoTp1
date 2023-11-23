@@ -7,7 +7,7 @@ public class Administrador extends Pessoa {
     private String email;
     private String dataNascimento;
     
-    private ArrayList<Funcionarios> funcionarios = new ArrayList<Funcionarios>();
+    private ArrayList<Funcionarios> funcionarios;
     
 
     public Administrador() {
@@ -35,12 +35,16 @@ public class Administrador extends Pessoa {
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    public ArrayList<Funcionarios> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(ArrayList<Funcionarios> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
     
-    public void cadastroFuncionario(Funcionarios funcionario){
-        funcionarios.add(funcionario);
-    }
-    public void excluitFuncionario(Funcionarios funcionario){
-        funcionarios.remove(funcionario);
-    }
+    
+
 
 }
