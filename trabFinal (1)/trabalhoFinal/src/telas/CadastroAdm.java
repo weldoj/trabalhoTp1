@@ -4,7 +4,9 @@
  */
 package telas;
 
+import javax.swing.JOptionPane;
 import trabalhofinal.Administrador;
+import trabalhofinal.ControleDeLogin;
 
 /**
  *
@@ -22,10 +24,13 @@ public class CadastroAdm extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(false);
         txtNomeAdm.requestFocus();
+        
+        
     }
     
     
     Administrador adm = new Administrador();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -214,7 +219,11 @@ public class CadastroAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeAdmActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        //Mostrar dados atuais do adm:
+        txtEmailAdm.setText(adm.getEmail());
+        txtIdAdm.setText(String.valueOf(adm.getId()));
+        txtNomeAdm.setText(adm.getNome());
+        txtSenhaAdm.setText(adm.getSenha());
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void ftxtCpfAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtCpfAdmActionPerformed
@@ -222,34 +231,63 @@ public class CadastroAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_ftxtCpfAdmActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // pegando as mensagens do campo de texto:
-        String nomeAdm = txtNomeAdm.getText();
-        String EmailAdm = txtEmailAdm.getText();
-        String cpfAdm = ftxtCpfAdm.getText();
-        int IDADm = Integer.parseInt(txtIdAdm.getText());
-        String dataNascimento = ftxtDataNascimento.getText();
-        String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
         
-        //passando as menssagens para a classe Administrador:
-        adm.setNome(nomeAdm);
-        adm.setEmail(EmailAdm);
-        adm.setCpf(cpfAdm);
-        adm.setId(IDADm);
-        adm.setDataNascimento(dataNascimento);
-        adm.setSenha(senhaAdm);
+        if (txtEmailAdm.getText().equals("") || txtIdAdm.getText().equals("") || txtNomeAdm.getText().equals("") || txtSenhaAdm.getPassword().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!");
+        }
+        else{
+            // pegando as mensagens do campo de texto:
+            String nomeAdm = txtNomeAdm.getText();
+            String EmailAdm = txtEmailAdm.getText();
+            String cpfAdm = ftxtCpfAdm.getText();
+            int IDADm = Integer.parseInt(txtIdAdm.getText());
+            String dataNascimento = ftxtDataNascimento.getText();
+            String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
+
+            //passando as menssagens para a classe Administrador:
+
+            adm.setNome(nomeAdm);
+            adm.setEmail(EmailAdm);
+            adm.setCpf(cpfAdm);
+            adm.setId(IDADm);
+            adm.setDataNascimento(dataNascimento);
+            adm.setSenha(senhaAdm);
+
+            ControleDeLogin.pegaAdmCpf(adm);
+            ControleDeLogin.pegaAdmNome(adm);
+            ControleDeLogin.pegaAdmSenha(adm);
+
+            //deixando as menssagens salvas nos campos:
+            txtNomeAdm.setEnabled(false);
+            txtEmailAdm.setEnabled(false);
+            ftxtCpfAdm.setEnabled(false);
+            txtIdAdm.setEnabled(false);
+            ftxtDataNascimento.setEnabled(false);
+            txtSenhaAdm.setEnabled(false);
+
+            //habilitando botões:
+            btnEditar.setEnabled(true);
+            btnSalvar.setEnabled(false);
+
+            JOptionPane.showMessageDialog(null, "Administrador cadastrado com sucesso!");
+        }
         
-        //deixando as menssagens salvas nos campos:
-        txtNomeAdm.setEnabled(false);
-        txtEmailAdm.setEnabled(false);
-        ftxtCpfAdm.setEnabled(false);
-        txtIdAdm.setEnabled(false);
-        ftxtDataNascimento.setEnabled(false);
-        txtSenhaAdm.setEnabled(false);
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        // habilitando os campos de texto:
+        txtNomeAdm.setEnabled(true);
+        txtEmailAdm.setEnabled(true);
+        ftxtCpfAdm.setEnabled(true);
+        txtIdAdm.setEnabled(true);
+        ftxtDataNascimento.setEnabled(true);
+        txtSenhaAdm.setEnabled(true);
+        
+        //habilitando os botões:
+        btnCancelar.setEnabled(true);
+        btnSalvar.setEnabled(true);
+        btnEditar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

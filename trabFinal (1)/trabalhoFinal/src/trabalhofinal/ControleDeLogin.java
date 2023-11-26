@@ -8,20 +8,39 @@ import java.util.ArrayList;
 //na página inicial do programa
 
 public  class ControleDeLogin {
+    
     Pessoa pessoa = new Pessoa();    
+
+    public ControleDeLogin() {
+    }
     
     public String cpfSalvoAdm(){
         if (pessoa instanceof Administrador){
             return  pessoa.getCpf();
-        }  
-        return null;
-        
+        }
+        return null; 
     }
+    
+    public String senhaSalvoAdm(){
+        if (pessoa instanceof Administrador){
+        }
+        return null;
+    }
+    
+    public String nomeSalvoAdm(){
+        if (pessoa instanceof Administrador){
+            return  pessoa.getNome();
+        }
+        return null; 
+    }
+        
+        
+    
     
     public  ArrayList<String> cpfSalvoFunc(){
         if (pessoa instanceof Funcionarios){
             Funcionarios funcionarios = (Funcionarios) pessoa;
-            ArrayList<Funcionarios> func = funcionarios.retornaLista();
+            ArrayList<Funcionarios> func = funcionarios.getFuncionarios();
             ArrayList<String> listaCpf = new ArrayList();
             for (int i=0; i < func.size(); i++){
                 Funcionarios funcionario = func.get(i);  
@@ -33,17 +52,12 @@ public  class ControleDeLogin {
         
     }
     
-    public String nomeSalvoAdm(){
-        if (pessoa instanceof Administrador){
-            return  pessoa.getNome();
-        }
-        return null; 
-    }
+    
     
     public  ArrayList<String> nomeSalvoFunc(){
         if (pessoa instanceof Funcionarios){
             Funcionarios funcionarios = (Funcionarios) pessoa;
-            ArrayList<Funcionarios> func = funcionarios.retornaLista();
+            ArrayList<Funcionarios> func = funcionarios.getFuncionarios();
             ArrayList<String> listaNomes = new ArrayList();
             for (int i=0; i < func.size(); i++){
                 Funcionarios funcionario = func.get(i);  
@@ -55,20 +69,15 @@ public  class ControleDeLogin {
         
     }
     
-    public String senhaSalvoAdm(){
-        if (pessoa instanceof Administrador){
-            return  pessoa.getSenha();
-        }
-        return null;
-    }
+    
     public  ArrayList<String> senhaSalvoFunc(){
         if (pessoa instanceof Funcionarios){
             Funcionarios funcionarios = (Funcionarios) pessoa;
-            ArrayList<Funcionarios> func = funcionarios.retornaLista();
+            ArrayList<Funcionarios> func = funcionarios.getFuncionarios();
             ArrayList<String> listaSenhas = new ArrayList();
             for (int i=0; i < func.size(); i++){
                 Funcionarios funcionario = func.get(i);  
-                listaSenhas.add(funcionario.getSenha()); 
+                 
             }
             return listaSenhas;
         }
@@ -76,7 +85,19 @@ public  class ControleDeLogin {
         
     }
     
-}
+    public static String pegaAdmCpf(Administrador adm){
+            return adm.getCpf();
+        }
+    public static String pegaAdmNome(Administrador adm){
+            return adm.getNome();
+        }
+    public static String pegaAdmSenha(Administrador adm){
+            return adm.getSenha();
+        }
+        
+    }
+    
+
 
 
     

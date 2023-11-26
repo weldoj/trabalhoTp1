@@ -7,15 +7,14 @@ public class Funcionarios extends Pessoa {
     private String cargo;
     private float salario;
     
-    ArrayList<Funcionarios> funcionarios = new ArrayList<>();
+    ArrayList<Funcionarios> funcionarios;
 
-    public Funcionarios() {
-    }
 
-    public Funcionarios(String cargo, float salario, String nome, String senha, int id, String cpf) {
-        super(nome, senha, id, cpf);
+    public Funcionarios( String nome, int id, String cpf, String cargo, float salario) {
+        super(nome, id, cpf);
         this.cargo = cargo;
         this.salario = salario;
+        this.funcionarios = new ArrayList<>();
         
     }
 
@@ -35,23 +34,25 @@ public class Funcionarios extends Pessoa {
         this.salario = salario;
     }
     
-    public void cadastroFuncionario(Funcionarios funcionario){
-        funcionario.getCargo();
-        funcionario.getSalario();
-        funcionario.getCpf();
-        funcionario.getId();
-        funcionario.getNome();
-        funcionario.getSenha();
-        
+    public void cadastroFuncionario(Funcionarios funcionario) {
+        funcionario.setCargo(getCargo());
+        funcionario.setSalario(getSalario());
+        funcionario.setCpf(getCpf());
+        funcionario.setId(getId());
+        funcionario.setNome(getNome());
+
         funcionarios.add(funcionario);
-    }
-    public void excluitFuncionario(Funcionarios funcionario){
+}
+
+    public void excluirFuncionario(Funcionarios funcionario){
         funcionarios.remove(funcionario);
     }
-    
-    public ArrayList retornaLista(){
+
+    ArrayList<Funcionarios> getFuncionarios() {
         return funcionarios;
     }
+
+    
 
    
 

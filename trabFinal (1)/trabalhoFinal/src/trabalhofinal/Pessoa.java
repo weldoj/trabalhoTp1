@@ -2,16 +2,14 @@ package trabalhofinal;
 
 public class Pessoa {
     private String nome;
-    private String senha;
     private int id;
     private String cpf;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String senha, int id, String cpf) {
+    public Pessoa(String nome, int id, String cpf) {
         this.nome = nome;
-        this.senha = senha;
         this.id = id;
         this.cpf = cpf;
     }
@@ -22,14 +20,6 @@ public class Pessoa {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public int getId() {
