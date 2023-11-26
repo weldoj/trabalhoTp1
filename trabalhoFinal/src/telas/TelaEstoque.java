@@ -390,6 +390,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         jLabel2.setText("Quantidade:");
 
         jLabel3.setText("Unidade:");
+        jLabel3.setToolTipText("");
 
         jLabel4.setText("Validade:");
 
@@ -1164,40 +1165,40 @@ public class TelaEstoque extends javax.swing.JFrame {
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         int selectedRow = tabela.getSelectedRow();
 
-    btnEditar.setEnabled(true);
-    btnExcluir.setEnabled(true);
-    btnAdicionar.setEnabled(false);
+        btnEditar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnAdicionar.setEnabled(false);
 
-    if (selectedRow >= 0 && selectedRow < tabela.getRowCount()) {
-        String tipoAlimento = obterTipoAlimentoSelecionado();
-        List<Estoque> produtosDoTipo = mapaProdutosPorTipo.get(tipoAlimento);
+        if (selectedRow >= 0 && selectedRow < tabela.getRowCount()) {
+            String tipoAlimento = obterTipoAlimentoSelecionado();
+            List<Estoque> produtosDoTipo = mapaProdutosPorTipo.get(tipoAlimento);
 
-        if (produtosDoTipo != null && !produtosDoTipo.isEmpty()) {
-            // Obter o código do produto selecionado
-            int codigoProdutoSelecionado = (int) tabela.getValueAt(selectedRow, 0);
+            if (produtosDoTipo != null && !produtosDoTipo.isEmpty()) {
+                // Obter o código do produto selecionado
+                int codigoProdutoSelecionado = (int) tabela.getValueAt(selectedRow, 0);
 
-            // Procurar o produto pelo código na lista
-            Estoque produtoSelecionado = null;
-            for (Estoque produto : produtosDoTipo) {
-                if (produto.getCodigo() == codigoProdutoSelecionado) {
-                    produtoSelecionado = produto;
-                    break;
+                // Procurar o produto pelo código na lista
+                Estoque produtoSelecionado = null;
+                for (Estoque produto : produtosDoTipo) {
+                    if (produto.getCodigo() == codigoProdutoSelecionado) {
+                        produtoSelecionado = produto;
+                        break;
+                    }
                 }
-            }
 
-            if (produtoSelecionado != null) {
-                // Preencher os campos com os dados do produto selecionado
-                txtCodigo.setText(String.valueOf(produtoSelecionado.getCodigo()));
-                txtNome.setText(produtoSelecionado.getNomeProduto());
-                txtValidade.setText(produtoSelecionado.getValidade());
-                snrQuantidade.setValue(produtoSelecionado.getQuantidade());
-                String[] partesUnidade = produtoSelecionado.getUnidade().split(" ");
-                txtUnidade.setText(partesUnidade[0]);
-                cbxUnidade.setSelectedItem(partesUnidade[1]);
-                txtCusto.setText(String.valueOf(produtoSelecionado.getCusto()));
-            }
-             }
-    }
+                if (produtoSelecionado != null) {
+                    // Preencher os campos com os dados do produto selecionado
+                    txtCodigo.setText(String.valueOf(produtoSelecionado.getCodigo()));
+                    txtNome.setText(produtoSelecionado.getNomeProduto());
+                    txtValidade.setText(produtoSelecionado.getValidade());
+                    snrQuantidade.setValue(produtoSelecionado.getQuantidade());
+                    String[] partesUnidade = produtoSelecionado.getUnidade().split(" ");
+                    txtUnidade.setText(partesUnidade[0]);
+                    cbxUnidade.setSelectedItem(partesUnidade[1]);
+                    txtCusto.setText(String.valueOf(produtoSelecionado.getCusto()));
+                }
+                 }
+        }
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
