@@ -4,6 +4,8 @@
  */
 package telas;
 
+import Modelo.Importar_Exportar;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,10 +28,17 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     String botao;
     int iPesquisar;
     
+    String diretorioAtual = System.getProperty("user.dir");
+    String caminhoArquivo = diretorioAtual + File.separator + "TrabalhoTp1.xlsx";
     
+
+
     public CadastroFuncionarios() {
         initComponents();
         listaFuncionarios = new ArrayList<>();
+        listaFuncionarios = Importar_Exportar.importData(caminhoArquivo);
+
+        carregarFuncionariosTabela();
         //habilitar ou desabilitar campos de texto:
         txtCargo.setEnabled(false);
         txtCpfFunc.setEnabled(false);
@@ -146,6 +155,11 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCpfFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarFuncionarios))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -171,11 +185,6 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtCpfFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisarFuncionarios))
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,10 +253,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
         tblFuncionarios.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
         tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "CPF", "Cargo", "Salário"
@@ -400,6 +406,9 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
         txtIDFunc.setText("");
         txtNomeFunc.setText("");
         txtSalario.setText("");
+        
+        Importar_Exportar.exportData(caminhoArquivo, listaFuncionarios);
+
     }//GEN-LAST:event_btnExcluirFuncionarioActionPerformed
 
     private void btnPesquisarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarFuncionariosActionPerformed
@@ -463,13 +472,20 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         botao = "novo";
+        int ID = listaFuncionarios.size() - 1;
         //habilitar ou desabilitar campos de texto:
         txtCargo.setEnabled(true);
         txtCpfFunc.setEnabled(true);
-        txtIDFunc.setEnabled(true);
+        txtIDFunc.setEnabled(false);
         txtNomeFunc.setEnabled(true);
         txtSalario.setEnabled(true);
-        
+        //ID sendo gerado automaticamente:
+        if (!listaFuncionarios.isEmpty() && !txtIDFunc.getText().equals("2")){
+            txtIDFunc.setText(String.valueOf(listaFuncionarios.get(ID).getId() + 1));
+        }
+        else{
+            txtIDFunc.setText("2");
+        }
         //habilitando e desabilitando botões:
         btnCancelar.setEnabled(true);
         btnExcluirFuncionario.setEnabled(false);
@@ -493,7 +509,10 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
             //pegando os dados fornecidos:
             String nomeFunc = txtNomeFunc.getText();
             String cpfFunc = txtCpfFunc.getText();
+            
+            
             int IdFunc = Integer.parseInt(txtIDFunc.getText());
+            System.out.println(IdFunc);
             String cargo = txtCargo.getText();
             float salario = Float.parseFloat(txtSalario.getText());
             
@@ -591,7 +610,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
             
         }
         
-        
+        Importar_Exportar.exportData(caminhoArquivo, listaFuncionarios);
         
         
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -686,7 +705,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnOk;
     private javax.swing.JButton btnPesquisarFuncionarios;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton btnSalvar;
+    public javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCargo;
@@ -694,7 +713,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     private javax.swing.JLabel lblIDFunc;
     private javax.swing.JLabel lblNomeFunc;
     private javax.swing.JLabel lblSalario;
-    private javax.swing.JTable tblFuncionarios;
+    public javax.swing.JTable tblFuncionarios;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JFormattedTextField txtCpfFunc;
     private javax.swing.JTextField txtIDFunc;

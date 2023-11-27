@@ -24,6 +24,8 @@ public class CadastroAdm extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(false);
         txtNomeAdm.requestFocus();
+        txtIdAdm.setText("1");
+        txtIdAdm.setEnabled(false);
         
         
     }
@@ -219,6 +221,19 @@ public class CadastroAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeAdmActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // habilitando os campos de texto:
+        txtNomeAdm.setEnabled(false);
+        txtEmailAdm.setEnabled(false);
+        ftxtCpfAdm.setEnabled(false);
+        txtIdAdm.setEnabled(false);
+        ftxtDataNascimento.setEnabled(false);
+        txtSenhaAdm.setEnabled(false);
+        
+        //habilitando os botões:
+        btnCancelar.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnEditar.setEnabled(true);
+        
         //Mostrar dados atuais do adm:
         txtEmailAdm.setText(adm.getEmail());
         txtIdAdm.setText(String.valueOf(adm.getId()));
@@ -280,7 +295,7 @@ public class CadastroAdm extends javax.swing.JFrame {
         txtNomeAdm.setEnabled(true);
         txtEmailAdm.setEnabled(true);
         ftxtCpfAdm.setEnabled(true);
-        txtIdAdm.setEnabled(true);
+        txtIdAdm.setEnabled(false);
         ftxtDataNascimento.setEnabled(true);
         txtSenhaAdm.setEnabled(true);
         

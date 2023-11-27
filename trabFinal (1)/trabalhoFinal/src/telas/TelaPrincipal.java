@@ -166,7 +166,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             controle.senhaSalvoAdm() != null &&
             txtCpf.getText().equals(controle.cpfSalvoAdm()) &&
             
-            txtSenha.getText().equals(controle.senhaSalvoAdm())) {
+            txtSenha.getPassword().equals(controle.senhaSalvoAdm())) {
             new Adm().setVisible(true);
         } else if (controle.cpfSalvoFunc() != null &&
                    controle.nomeSalvoFunc() != null &&

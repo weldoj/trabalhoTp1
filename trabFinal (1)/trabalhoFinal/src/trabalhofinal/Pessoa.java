@@ -37,6 +37,10 @@ public class Pessoa {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public void setIdade(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }
