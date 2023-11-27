@@ -642,7 +642,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
         
         if (i>=0 && i<listaFuncionarios.size()){
             Funcionarios func = listaFuncionarios.get(i);
-            txtCargo.setText(func.getCargo());
+            txtCargo.setText(func.getCargo());  
             txtCpfFunc.setText(func.getCpf());
             txtIDFunc.setText(String.valueOf(func.getId()));
             txtNomeFunc.setText(func.getNome());

@@ -4,9 +4,15 @@
  */
 package telas;
 
+import java.io.File;
 import javax.swing.JOptionPane;
 import trabalhofinal.Administrador;
 import trabalhofinal.ControleDeLogin;
+import Modelo.Importar_ExportarDadosAdm;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import trabalhofinal.Administrador;
 
 /**
  *
@@ -19,19 +25,35 @@ public class CadastroAdm extends javax.swing.JFrame {
     /**
      * Creates new form CadastroAdm
      */
+    String diretorioAtual = System.getProperty("user.dir");
+    String caminhoArquivo = diretorioAtual + File.separator + "DadosAdm.xlsx";
+    Administrador adm = new Administrador();
+    
     public CadastroAdm() {
+        Importar_ExportarDadosAdm.importData(caminhoArquivo);
+        System.out.println(caminhoArquivo);
         initComponents();
+        
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(false);
         txtNomeAdm.requestFocus();
         txtIdAdm.setText("1");
         txtIdAdm.setEnabled(false);
         
-        
+        txtEmailAdm.setText(adm.getEmail());
+        txtNomeAdm.setText(adm.getNome());
+        txtSenhaAdm.setText(adm.getSenha());
+        txtCpfAdm.setText(adm.getCpf());
+        txtDataNascimento.setText(adm.getDataNascimento());
+        System.out.println(adm.getCpf());
+        System.out.println(adm.getDataNascimento());
+        System.out.println(adm.getEmail());
+        System.out.println(adm.getId());
+        System.out.println(adm.getSenha());
     }
     
     
-    Administrador adm = new Administrador();
+   
     
 
     /**
@@ -55,8 +77,8 @@ public class CadastroAdm extends javax.swing.JFrame {
         lblEmailAdm = new javax.swing.JLabel();
         lblDataNascimento = new javax.swing.JLabel();
         lblCpfAdm = new javax.swing.JLabel();
-        ftxtCpfAdm = new javax.swing.JFormattedTextField();
-        ftxtDataNascimento = new javax.swing.JFormattedTextField();
+        txtCpfAdm = new javax.swing.JFormattedTextField();
+        txtDataNascimento = new javax.swing.JFormattedTextField();
         lblSenhaAdm = new javax.swing.JLabel();
         txtSenhaAdm = new javax.swing.JPasswordField();
 
@@ -105,18 +127,18 @@ public class CadastroAdm extends javax.swing.JFrame {
         lblCpfAdm.setText("CPF:");
 
         try {
-            ftxtCpfAdm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            txtCpfAdm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        ftxtCpfAdm.addActionListener(new java.awt.event.ActionListener() {
+        txtCpfAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ftxtCpfAdmActionPerformed(evt);
+                txtCpfAdmActionPerformed(evt);
             }
         });
 
         try {
-            ftxtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -133,7 +155,7 @@ public class CadastroAdm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblDataNascimento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ftxtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNomeADm)
@@ -147,7 +169,7 @@ public class CadastroAdm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtEmailAdm)
                                 .addGap(21, 21, 21))
-                            .addComponent(ftxtCpfAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCpfAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblSenhaAdm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -168,7 +190,7 @@ public class CadastroAdm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCpfAdm)
-                    .addComponent(ftxtCpfAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCpfAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIdAdm)
@@ -176,7 +198,7 @@ public class CadastroAdm extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftxtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSenhaAdm)
@@ -224,9 +246,9 @@ public class CadastroAdm extends javax.swing.JFrame {
         // habilitando os campos de texto:
         txtNomeAdm.setEnabled(false);
         txtEmailAdm.setEnabled(false);
-        ftxtCpfAdm.setEnabled(false);
+        txtCpfAdm.setEnabled(false);
         txtIdAdm.setEnabled(false);
-        ftxtDataNascimento.setEnabled(false);
+        txtDataNascimento.setEnabled(false);
         txtSenhaAdm.setEnabled(false);
         
         //habilitando os botões:
@@ -241,9 +263,9 @@ public class CadastroAdm extends javax.swing.JFrame {
         txtSenhaAdm.setText(adm.getSenha());
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void ftxtCpfAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtCpfAdmActionPerformed
+    private void txtCpfAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfAdmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ftxtCpfAdmActionPerformed
+    }//GEN-LAST:event_txtCpfAdmActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
@@ -254,9 +276,9 @@ public class CadastroAdm extends javax.swing.JFrame {
             // pegando as mensagens do campo de texto:
             String nomeAdm = txtNomeAdm.getText();
             String EmailAdm = txtEmailAdm.getText();
-            String cpfAdm = ftxtCpfAdm.getText();
+            String cpfAdm = txtCpfAdm.getText();
             int IDADm = Integer.parseInt(txtIdAdm.getText());
-            String dataNascimento = ftxtDataNascimento.getText();
+            String dataNascimento = txtDataNascimento.getText();
             String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
 
             //passando as menssagens para a classe Administrador:
@@ -275,9 +297,9 @@ public class CadastroAdm extends javax.swing.JFrame {
             //deixando as menssagens salvas nos campos:
             txtNomeAdm.setEnabled(false);
             txtEmailAdm.setEnabled(false);
-            ftxtCpfAdm.setEnabled(false);
+            txtCpfAdm.setEnabled(false);
             txtIdAdm.setEnabled(false);
-            ftxtDataNascimento.setEnabled(false);
+            txtDataNascimento.setEnabled(false);
             txtSenhaAdm.setEnabled(false);
 
             //habilitando botões:
@@ -287,16 +309,20 @@ public class CadastroAdm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Administrador cadastrado com sucesso!");
         }
         
-        
+        try {
+            Importar_ExportarDadosAdm.exportData(caminhoArquivo, adm);
+        } catch (IOException ex) {
+            Logger.getLogger(CadastroAdm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // habilitando os campos de texto:
         txtNomeAdm.setEnabled(true);
         txtEmailAdm.setEnabled(true);
-        ftxtCpfAdm.setEnabled(true);
+        txtCpfAdm.setEnabled(true);
         txtIdAdm.setEnabled(false);
-        ftxtDataNascimento.setEnabled(true);
+        txtDataNascimento.setEnabled(true);
         txtSenhaAdm.setEnabled(true);
         
         //habilitando os botões:
@@ -344,8 +370,6 @@ public class CadastroAdm extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JFormattedTextField ftxtCpfAdm;
-    private javax.swing.JFormattedTextField ftxtDataNascimento;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCpfAdm;
     private javax.swing.JLabel lblDataNascimento;
@@ -353,6 +377,8 @@ public class CadastroAdm extends javax.swing.JFrame {
     private javax.swing.JLabel lblIdAdm;
     private javax.swing.JLabel lblNomeADm;
     private javax.swing.JLabel lblSenhaAdm;
+    private javax.swing.JFormattedTextField txtCpfAdm;
+    private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextField txtEmailAdm;
     private javax.swing.JTextField txtIdAdm;
     private javax.swing.JTextField txtNomeAdm;
