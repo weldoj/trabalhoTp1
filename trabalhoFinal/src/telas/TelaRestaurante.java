@@ -4,8 +4,11 @@
  */
 package telas;
 
+import java.util.List;
 import javax.swing.JOptionPane;
+import trabalhofinal.ExcelHandler;
 import trabalhofinal.Restaurante;
+
 
 /**
  *
@@ -14,11 +17,42 @@ import trabalhofinal.Restaurante;
 public class TelaRestaurante extends javax.swing.JFrame {
     Restaurante restaurante;
     String botao = "";
+    
+    private ExcelHandler excelHandler;
+   
     public TelaRestaurante() {
         initComponents();
         
         restaurante = new Restaurante();
+        excelHandler = new ExcelHandler();
+        // Carregar dados ao abrir a tela
+        carregarDadosAoAbrir();
+        
+        
+      }
+     private void carregarDadosAoAbrir() {
+        List<Restaurante> restaurantes = excelHandler.lerDadosDoArquivo();
+
+        if (!restaurantes.isEmpty()) {
+            restaurante = restaurantes.get(0); // Assumindo que há apenas um restaurante no arquivo
+            txtNome.setEnabled(false);
+            txtDescricao.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtCnpj.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            carregarCamposRestaurante();
+        }
     }
+
+    private void carregarCamposRestaurante() {
+        txtNome.setText(restaurante.getNomeEmp());
+        txtDescricao.setText(restaurante.getDescricao());
+        txtEndereco.setText(restaurante.getEndereco());
+        txtCnpj.setText(String.valueOf(restaurante.getCnpj()));
+        txtTelefone.setText(String.valueOf(restaurante.getTelefone()));
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -225,9 +259,11 @@ public class TelaRestaurante extends javax.swing.JFrame {
         
       
         try {
+            List<Restaurante> restaurantes = excelHandler.lerDadosDoArquivo();
             if (txtNome.getText().equals("") ||txtDescricao.getText().equals("") ||txtEndereco.getText().equals("") ||txtCnpj.getText().equals("") ||txtTelefone.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Messagem", JOptionPane.PLAIN_MESSAGE);
             }
+            
             else {
                 String nome = txtNome.getText();
                 String descricao = txtDescricao.getText();
@@ -238,19 +274,27 @@ public class TelaRestaurante extends javax.swing.JFrame {
                 
                 
                     restaurante = new Restaurante(nome, cnpj, endereco, descricao, telefone);
-                
+                    
+                    restaurantes.add(restaurante);
+                    
                 }
                 else if (botao.equals("editar")) {
+                    restaurantes.remove(restaurante);
+                    excelHandler.excluirDadosDoArquivo(restaurantes, cnpj);
+                    
                     restaurante.setNomeEmp(nome);
                     restaurante.setDescricao(descricao);
                     restaurante.setEndereco(endereco);
                     restaurante.setCnpj(cnpj);
                     restaurante.setTelefone(telefone);
+                    restaurantes.add(restaurante);
                     
+                  
                     
-                
                 }
-
+                
+                excelHandler.salvarDadosNoArquivo(restaurantes);
+            
                 txtNome.setText(restaurante.getNomeEmp());
                 txtDescricao.setText(restaurante.getDescricao());
                 txtEndereco.setText(restaurante.getEndereco());
@@ -262,6 +306,7 @@ public class TelaRestaurante extends javax.swing.JFrame {
                 txtEndereco.setEnabled(false);
                 txtCnpj.setEnabled(false);
                 txtTelefone.setEnabled(false);
+                this.setVisible(false);
                 
 
             }
