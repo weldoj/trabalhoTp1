@@ -1,17 +1,24 @@
 package trabalhofinal;
 
+import java.util.ArrayList;
+
 
 public class Funcionarios extends Pessoa {
     private String cargo;
     private float salario;
+    
+    ArrayList<Funcionarios> funcionarios;
 
     public Funcionarios() {
     }
 
-    public Funcionarios(String cargo, float salario, String nome, String senha, int id, long cpf) {
-        super(nome, senha, id, cpf);
+    
+    public Funcionarios( String nome, String id, String cpf, String cargo, float salario) {
+        super(nome, id, cpf);
         this.cargo = cargo;
         this.salario = salario;
+        this.funcionarios = new ArrayList<>();
+        
     }
 
     public String getCargo() {
@@ -30,5 +37,26 @@ public class Funcionarios extends Pessoa {
         this.salario = salario;
     }
     
+    public void cadastroFuncionario(Funcionarios funcionario) {
+        funcionario.setCargo(getCargo());
+        funcionario.setSalario(getSalario());
+        funcionario.setCpf(getCpf());
+        funcionario.setId(getId());
+        funcionario.setNome(getNome());
+
+        funcionarios.add(funcionario);
+}
+
+    public void excluirFuncionario(Funcionarios funcionario){
+        funcionarios.remove(funcionario);
+    }
+
+    ArrayList<Funcionarios> getFuncionarios() {
+        return funcionarios;
+    }
+
+    
+
+   
 
 }

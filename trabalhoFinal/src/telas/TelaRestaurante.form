@@ -185,7 +185,11 @@
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
           <Events>
+<<<<<<< HEAD:trabalhoFinal/src/telas/TelaRestaurante.form
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+=======
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+>>>>>>> teste:trabFinal (1)/trabalhoFinal/src/telas/TelaRestaurante.form
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">

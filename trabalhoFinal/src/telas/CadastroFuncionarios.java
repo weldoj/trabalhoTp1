@@ -4,17 +4,78 @@
  */
 package telas;
 
+import Modelo.Importar_Exportar;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import trabalhofinal.Funcionarios;
+
 /**
  *
  * @author weldo
  */
+
+
 public class CadastroFuncionarios extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroFuncionarios
      */
+    
+    //coisas que serão utilizadas no código:
+    static ArrayList<Funcionarios> listaFuncionarios;
+    String botao;
+    int iPesquisar;
+    
+    String diretorioAtual = System.getProperty("user.dir");
+    String caminhoArquivo = diretorioAtual + File.separator + "DadosProjetoTp1.xlsx";
+    
+
+
     public CadastroFuncionarios() {
         initComponents();
+        listaFuncionarios = new ArrayList<>();
+        listaFuncionarios = Importar_Exportar.importData(caminhoArquivo);
+
+        carregarFuncionariosTabela();
+        //habilitar ou desabilitar campos de texto:
+        txtCargo.setEnabled(false);
+        txtCpfFunc.setEnabled(false);
+        txtIDFunc.setEnabled(false);
+        txtNomeFunc.setEnabled(false);
+        txtSalario.setEnabled(false);
+        
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(false);
+        btnExcluirFuncionario.setEnabled(false);
+        btnGerenciarFuncionarios.setEnabled(false);
+        btnNovo.setEnabled(true);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(true);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        
+        txtNomeFunc.requestFocus();
+    }
+    
+    public void carregarFuncionariosTabela(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"ID", "Nome", "CPF", "Cargo", "Salario"}, 0);
+        
+        for (int i = 0; i < listaFuncionarios.size(); i++){
+            Object linha[] = new Object[]{listaFuncionarios.get(i).getId(),
+                                          listaFuncionarios.get(i).getNome(), 
+                                          listaFuncionarios.get(i).getCpf(),
+                                          listaFuncionarios.get(i).getCargo(),
+                                          listaFuncionarios.get(i).getSalario()};
+            modelo.addRow(linha);
+        }
+        
+        //Adcionando a linha na coluna:
+         tblFuncionarios.setModel(modelo);
+         
+         tblFuncionarios.getColumnModel().getColumn(0).setPreferredWidth(5);
+         
     }
 
     /**
@@ -27,165 +88,179 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        lblNomeFunc = new javax.swing.JLabel();
+        txtNomeFunc = new javax.swing.JTextField();
+        lblCpfFunc = new javax.swing.JLabel();
+        lblIDFunc = new javax.swing.JLabel();
+        txtIDFunc = new javax.swing.JTextField();
+        lblSalario = new javax.swing.JLabel();
+        txtSalario = new javax.swing.JTextField();
+        lblCargo = new javax.swing.JLabel();
+        txtCargo = new javax.swing.JTextField();
+        btnPesquisarFuncionarios = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
+        txtCpfFunc = new javax.swing.JFormattedTextField();
+        btnNovo = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton9 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        tblFuncionarios = new javax.swing.JTable();
+        btnGerenciarFuncionarios = new javax.swing.JButton();
+        btnExcluirFuncionario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Funcionarios"));
 
-        jLabel1.setText("Nome:");
+        lblNomeFunc.setText("Nome:");
 
-        jLabel2.setText("CPF:");
+        lblCpfFunc.setText("CPF:");
 
-        jLabel3.setText("ID:");
+        lblIDFunc.setText("ID:");
 
-        jLabel5.setText("Salário:");
+        lblSalario.setText("Salário:");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtSalario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtSalarioActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Cargo:");
+        lblCargo.setText("Cargo:");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_120900.png"))); // NOI18N
-        jButton6.setText("Pesquisar Funcionário");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisarFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_120900.png"))); // NOI18N
+        btnPesquisarFuncionarios.setText("Pesquisar Funcionário");
+        btnPesquisarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnPesquisarFuncionariosActionPerformed(evt);
             }
         });
 
-        jButton7.setText("Ok");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnOk.setText("Ok");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnOkActionPerformed(evt);
             }
         });
+
+        try {
+            txtCpfFunc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCpfFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarFuncionarios))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblNomeFunc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNomeFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                            .addComponent(lblCpfFunc)
+                            .addComponent(lblIDFunc))
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(147, 147, 147)
+                                .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIDFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(lblCargo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblSalario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNomeFunc)
+                    .addComponent(txtNomeFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCpfFunc)
+                    .addComponent(txtCpfFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOk))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblIDFunc)
+                    .addComponent(txtIDFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblCargo)
+                    .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addComponent(jButton6)
+                    .addComponent(lblSalario)
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addComponent(btnPesquisarFuncionarios)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plus_new_create_more_icon_192478_1.png"))); // NOI18N
-        jButton2.setText("Novo");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/4213410-arrow-down-download-move-save_115410.png"))); // NOI18N
-        jButton1.setText("Salvar");
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/4115230-cancel-close-cross-delete_114048.png"))); // NOI18N
-        jButton4.setText("Cancelar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plus_new_create_more_icon_192478_1.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/signout_106525_1.png"))); // NOI18N
-        jButton5.setText("Sair");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/4213410-arrow-down-download-move-save_115410.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/4115230-cancel-close-cross-delete_114048.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/signout_106525_1.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
             }
         });
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Funcionários"));
+        jScrollPane1.setEnabled(false);
 
-        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblFuncionarios.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
+        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nome", "CPF", "ID", "Cargo", "Salário"
+                "ID", "Nome", "CPF", "Cargo", "Salário"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -199,16 +274,29 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFuncionariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblFuncionarios);
+        if (tblFuncionarios.getColumnModel().getColumnCount() > 0) {
+            tblFuncionarios.getColumnModel().getColumn(0).setPreferredWidth(5);
+        }
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/edit_modify_icon-icons.com_49882_1.png"))); // NOI18N
-        jButton9.setText("Gerenciar Funcionário");
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete_delete_deleteusers_delete_male_user_maleclient_2348_1.png"))); // NOI18N
-        jButton3.setText("Excluir Funcionario");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnGerenciarFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/edit_modify_icon-icons.com_49882_1.png"))); // NOI18N
+        btnGerenciarFuncionarios.setText("Gerenciar Funcionário");
+        btnGerenciarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnGerenciarFuncionariosActionPerformed(evt);
+            }
+        });
+
+        btnExcluirFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete_delete_deleteusers_delete_male_user_maleclient_2348_1.png"))); // NOI18N
+        btnExcluirFuncionario.setText("Excluir Funcionario");
+        btnExcluirFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirFuncionarioActionPerformed(evt);
             }
         });
 
@@ -220,20 +308,20 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jButton1)
+                        .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton9)
+                        .addComponent(btnGerenciarFuncionarios)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluirFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
+                        .addComponent(btnSair)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -244,15 +332,17 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton9)
-                    .addComponent(jButton3))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnNovo)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSair)
+                    .addComponent(btnGerenciarFuncionarios)
+                    .addComponent(btnExcluirFuncionario))
                 .addContainerGap())
         );
 
@@ -260,29 +350,317 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtSalarioActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //habilitar ou desabilitar campos de texto:
+        txtCargo.setEnabled(false);
+        txtCpfFunc.setEnabled(false);
+        txtIDFunc.setEnabled(false);
+        txtNomeFunc.setEnabled(false);
+        txtSalario.setEnabled(false);
+        
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(false);
+        btnExcluirFuncionario.setEnabled(false);
+        btnGerenciarFuncionarios.setEnabled(false);
+        btnNovo.setEnabled(true);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(true);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        
+        //lampando campos de texto:
+        txtCargo.setText("");
+        txtCpfFunc.setText("");
+        txtIDFunc.setText("");
+        txtNomeFunc.setText("");
+        txtSalario.setText("");
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnExcluirFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirFuncionarioActionPerformed
+        int i = tblFuncionarios.getSelectedRow();
+        if (i >= 0 && i<listaFuncionarios.size()){
+            listaFuncionarios.remove(i);
+            carregarFuncionariosTabela(); 
+        }
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(true);
+        btnExcluirFuncionario.setEnabled(false);
+        btnGerenciarFuncionarios.setEnabled(false);
+        btnNovo.setEnabled(false);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(false);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(true);
+        
+        //limando campos de texto:
+        txtCargo.setText("");
+        txtCpfFunc.setText("");
+        txtIDFunc.setText("");
+        txtNomeFunc.setText("");
+        txtSalario.setText("");
+        
+        Importar_Exportar.exportData(caminhoArquivo, listaFuncionarios);
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnExcluirFuncionarioActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnPesquisarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarFuncionariosActionPerformed
+        if (listaFuncionarios.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ainda não há funcionários cadastrado!"); 
+        }
+        else{
+            //habilitar ou desabilitar campos de texto:
+            txtCargo.setEnabled(false);
+            txtCpfFunc.setEnabled(true);
+            txtIDFunc.setEnabled(false);
+            txtNomeFunc.setEnabled(false);
+            txtSalario.setEnabled(false);
+
+            //habilitando e desabilitando botões:
+            btnCancelar.setEnabled(true);
+            btnExcluirFuncionario.setEnabled(false);
+            btnGerenciarFuncionarios.setEnabled(false);
+            btnNovo.setEnabled(false);
+            btnOk.setEnabled(true);
+            btnPesquisarFuncionarios.setEnabled(false);
+            btnSair.setEnabled(true);
+            btnSalvar.setEnabled(false);
+
+            //lampando campos de texto:
+            txtCargo.setText("");
+            txtCpfFunc.setText("");
+            txtIDFunc.setText("");
+            txtNomeFunc.setText("");
+            txtSalario.setText("");
+        }
+        
+                              
+    }//GEN-LAST:event_btnPesquisarFuncionariosActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        String vereficaSeExiste = "";
+        if (txtCpfFunc.getText().equals(ABORT)){
+            JOptionPane.showMessageDialog(null, "O campo deve ser preenchido!");
+        }
+        else{
+            for (iPesquisar = 0; iPesquisar < listaFuncionarios.size(); iPesquisar++){
+                if (listaFuncionarios.get(iPesquisar).getCpf().equals(txtCpfFunc.getText())){
+                    txtCargo.setText(listaFuncionarios.get(iPesquisar).getCargo());
+                    txtCpfFunc.setText(listaFuncionarios.get(iPesquisar).getCpf());
+                    txtIDFunc.setText(String.valueOf(listaFuncionarios.get(iPesquisar).getId()));
+                    txtNomeFunc.setText(listaFuncionarios.get(iPesquisar).getNome());
+                    txtSalario.setText(String.valueOf(listaFuncionarios.get(iPesquisar).getSalario()));
+                    btnGerenciarFuncionarios.setEnabled(true);
+                    vereficaSeExiste = "Existe";
+                    break;
+                }
+                    
+
+                }
+            if (vereficaSeExiste.equals("")){
+                JOptionPane.showMessageDialog(null, "Esse funcionario não existe!");
+            }
+        }
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        botao = "novo";
+        int ID = listaFuncionarios.size() - 1;
+        //habilitar ou desabilitar campos de texto:
+        txtCargo.setEnabled(true);
+        txtCpfFunc.setEnabled(true);
+        txtIDFunc.setEnabled(false);
+        txtNomeFunc.setEnabled(true);
+        txtSalario.setEnabled(true);
+        //ID sendo gerado automaticamente:
+        if (!listaFuncionarios.isEmpty() && !txtIDFunc.getText().equals("2")){
+            txtIDFunc.setText(String.valueOf(listaFuncionarios.get(ID).getId() + 1));
+        }
+        else{
+            txtIDFunc.setText("2");
+        }
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(true);
+        btnExcluirFuncionario.setEnabled(false);
+        btnGerenciarFuncionarios.setEnabled(false);
+        btnNovo.setEnabled(false);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(false);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(true);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        int count = 0;
+        //verefica se tem algum campo vazio:
+        if (txtCargo.getText().equals("") || txtCpfFunc.getText().equals("") ||
+            txtIDFunc.getText().equals("") || txtNomeFunc.getText().equals("") || txtSalario.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!");
+        }
+        
+        else{
+            //pegando os dados fornecidos:
+            String nomeFunc = txtNomeFunc.getText();
+            String cpfFunc = txtCpfFunc.getText();
+            
+            
+            String IdFunc = txtIDFunc.getText();
+            System.out.println(IdFunc);
+            String cargo = txtCargo.getText();
+            float salario = Float.parseFloat(txtSalario.getText());
+            
+            
+            
+            //vereficando se a ação de salvar veio do botão novo:
+            if ("novo".equals(botao)){
+                //verefica se há dois Cpf iguais, já que só existe um cpf por pessoa:
+                for (int i=0; i< listaFuncionarios.size(); i++){
+                    if(listaFuncionarios.get(i).getCpf().equals(cpfFunc)){                
+                        count += 1;
+                    }
+                }
+                if (count >=1){
+                    JOptionPane.showMessageDialog(null, "Já há um funcionário cadastrado com esse CPF!");      
+                }
+                else{
+                //Salvando funcionário: 
+                Funcionarios funcionario = new Funcionarios( nomeFunc, IdFunc, cpfFunc, cargo, salario); 
+                listaFuncionarios.add( funcionario);
+                JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+                carregarFuncionariosTabela();
+                
+                //habilitar ou desabilitar campos de texto:
+                txtCargo.setEnabled(false);
+                txtCpfFunc.setEnabled(false);
+                txtIDFunc.setEnabled(false);
+                txtNomeFunc.setEnabled(false);
+                txtSalario.setEnabled(false);
+
+                //habilitando e desabilitando botões:
+                btnCancelar.setEnabled(false);
+                btnExcluirFuncionario.setEnabled(false);
+                btnGerenciarFuncionarios.setEnabled(false);
+                btnNovo.setEnabled(true);
+                btnOk.setEnabled(false);
+                btnPesquisarFuncionarios.setEnabled(true);
+                btnSair.setEnabled(true);
+                btnSalvar.setEnabled(false);
+
+                //limando campos de texto:
+                txtCargo.setText("");
+                txtCpfFunc.setText("");
+                txtIDFunc.setText("");
+                txtNomeFunc.setText("");
+                txtSalario.setText("");
+                }
+            }
+
+            //vereficando se a ação de salvar veio do botão genciar funcionarios:
+            else if ("gerenciar funcionarios".equals(botao)){
+                //Se a ação vier da tabela:
+                int i = tblFuncionarios.getSelectedRow();
+                if (i>=0 && i<listaFuncionarios.size()){
+                    listaFuncionarios.get(i).setNome(nomeFunc);
+                    listaFuncionarios.get(i).setCpf(cpfFunc);
+                    listaFuncionarios.get(i).setId(IdFunc);
+                    listaFuncionarios.get(i).setCargo(cargo);
+                    listaFuncionarios.get(i).setSalario(salario);
+                }
+                //Se a ação a ação vier do botão ok, logo depois que pesquisou o funcionario:
+                else if (iPesquisar <= listaFuncionarios.size()){
+                    listaFuncionarios.get(iPesquisar).setNome(nomeFunc);
+                    listaFuncionarios.get(iPesquisar).setCpf(cpfFunc);
+                    listaFuncionarios.get(iPesquisar).setId(IdFunc);
+                    listaFuncionarios.get(iPesquisar).setCargo(cargo);
+                    listaFuncionarios.get(iPesquisar).setSalario(salario);
+                }
+
+                carregarFuncionariosTabela();
+                //habilitar ou desabilitar campos de texto:
+                txtCargo.setEnabled(false);
+                txtCpfFunc.setEnabled(false);
+                txtIDFunc.setEnabled(false);
+                txtNomeFunc.setEnabled(false);
+                txtSalario.setEnabled(false);
+
+                //habilitando e desabilitando botões:
+                btnCancelar.setEnabled(false);
+                btnExcluirFuncionario.setEnabled(false);
+                btnGerenciarFuncionarios.setEnabled(false);
+                btnNovo.setEnabled(true);
+                btnOk.setEnabled(false);
+                btnPesquisarFuncionarios.setEnabled(true);
+                btnSair.setEnabled(true);
+                btnSalvar.setEnabled(false);
+
+                //limando campos de texto:
+                txtCargo.setText("");
+                txtCpfFunc.setText("");
+                txtIDFunc.setText("");
+                txtNomeFunc.setText("");
+                txtSalario.setText("");
+            }
+            
+        }
+        
+        Importar_Exportar.exportData(caminhoArquivo, listaFuncionarios);
+        
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnGerenciarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarFuncionariosActionPerformed
+        botao = "gerenciar funcionarios";
+        //habilitar ou desabilitar campos de texto:
+        txtCargo.setEnabled(true);
+        txtCpfFunc.setEnabled(false);
+        txtIDFunc.setEnabled(false);
+        txtNomeFunc.setEnabled(true);
+        txtSalario.setEnabled(true);
+        
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(true);
+        btnExcluirFuncionario.setEnabled(false);
+        btnGerenciarFuncionarios.setEnabled(false);
+        btnNovo.setEnabled(false);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(false);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(true);
+        
+        
+    }//GEN-LAST:event_btnGerenciarFuncionariosActionPerformed
+
+    private void tblFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionariosMouseClicked
+        int i = tblFuncionarios.getSelectedRow();
+        
+        if (i>=0 && i<listaFuncionarios.size()){
+            Funcionarios func = listaFuncionarios.get(i);
+            txtCargo.setText(func.getCargo());  
+            txtCpfFunc.setText(func.getCpf());
+            txtIDFunc.setText(String.valueOf(func.getId()));
+            txtNomeFunc.setText(func.getNome());
+            txtSalario.setText(String.valueOf(func.getSalario()));
+        }
+        
+        
+        
+        //habilitando e desabilitando botões:
+        btnCancelar.setEnabled(true);
+        btnExcluirFuncionario.setEnabled(true);
+        btnGerenciarFuncionarios.setEnabled(true);
+        btnNovo.setEnabled(false);
+        btnOk.setEnabled(false);
+        btnPesquisarFuncionarios.setEnabled(false);
+        btnSair.setEnabled(true);
+        btnSalvar.setEnabled(true);
+    }//GEN-LAST:event_tblFuncionariosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -320,26 +698,26 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExcluirFuncionario;
+    private javax.swing.JButton btnGerenciarFuncionarios;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnOk;
+    private javax.swing.JButton btnPesquisarFuncionarios;
+    private javax.swing.JButton btnSair;
+    public javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel lblCargo;
+    private javax.swing.JLabel lblCpfFunc;
+    private javax.swing.JLabel lblIDFunc;
+    private javax.swing.JLabel lblNomeFunc;
+    private javax.swing.JLabel lblSalario;
+    public javax.swing.JTable tblFuncionarios;
+    private javax.swing.JTextField txtCargo;
+    private javax.swing.JFormattedTextField txtCpfFunc;
+    private javax.swing.JTextField txtIDFunc;
+    private javax.swing.JTextField txtNomeFunc;
+    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }

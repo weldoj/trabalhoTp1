@@ -2,16 +2,14 @@ package trabalhofinal;
 
 public class Pessoa {
     private String nome;
-    private String senha;
-    private int id;
-    private long cpf;
+    private String id;
+    private String cpf;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String senha, int id, long cpf) {
+    public Pessoa(String nome, String id, String cpf) {
         this.nome = nome;
-        this.senha = senha;
         this.id = id;
         this.cpf = cpf;
     }
@@ -24,28 +22,24 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public void setIdade(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
