@@ -4,17 +4,52 @@
  */
 package telas;
 
+import static java.lang.String.valueOf;
+import javax.swing.JOptionPane;
+import trabalhofinal.Pedido;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import trabalhofinal.Despesa;
 /**
  *
  * @author Caio Martins
  */
 public class TelaDespesa extends javax.swing.JFrame {
+    
+    private void atualizarTabelaDespesa() {
+    DefaultTableModel model = (DefaultTableModel) tblDespesa.getModel();
+    model.setRowCount(0); // Limpa a tabela antes de adicionar os novos dados
+
+    for (Despesa despesa : listaDespesa) {
+        Object[] row = {despesa.getValor(), despesa.getData(), despesa.getDescricao()};
+        model.addRow(row);
+    }
+}
+    
+    String botao;
+    static ArrayList<Despesa> listaDespesa = new ArrayList<>();
 
     /**
      * Creates new form TelaDespesa
      */
     public TelaDespesa() {
         initComponents();
+        
+        // Botões habilitados/desbilitados; 
+        
+        bntNovoDespesa.setEnabled(true);
+        bntSalvarDespesa.setEnabled(false);
+        bntCancelarDespesa.setEnabled(false);
+        bntEditarDespesa.setEnabled(false);
+        bntExcluirDespesa.setEnabled(false);
+        
+        // Entradas habilitadas/desbilitadas; 
+        entValorDespesa.setEnabled(false);
+        entDataDespesa.setEnabled(false);
+        entDescricaoDespesa.setEnabled(false);
     }
 
     /**
@@ -39,6 +74,7 @@ public class TelaDespesa extends javax.swing.JFrame {
         bntExcluirDespesa = new javax.swing.JButton();
         scrDescricaoDespesa = new javax.swing.JScrollPane();
         entDescricaoDespesa = new javax.swing.JTextArea();
+        bntSairDespesa = new javax.swing.JButton();
         scrDespesa = new javax.swing.JScrollPane();
         tblDespesa = new javax.swing.JTable();
 
@@ -90,7 +126,7 @@ public class TelaDespesa extends javax.swing.JFrame {
             }
         });
 
-        bntExcluirDespesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/4115230-cancel-close-cross-delete_114048.png"))); // NOI18N
+        bntExcluirDespesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Line_ui_icons_Svg-03_icon-icons.com_72170_1.png"))); // NOI18N
         bntExcluirDespesa.setText("Excluir");
         bntExcluirDespesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +137,14 @@ public class TelaDespesa extends javax.swing.JFrame {
         entDescricaoDespesa.setColumns(20);
         entDescricaoDespesa.setRows(5);
         scrDescricaoDespesa.setViewportView(entDescricaoDespesa);
+
+        bntSairDespesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/signout_106525.png"))); // NOI18N
+        bntSairDespesa.setText("Sair");
+        bntSairDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSairDespesaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDespesaLayout = new javax.swing.GroupLayout(pnlDespesa);
         pnlDespesa.setLayout(pnlDespesaLayout);
@@ -120,51 +164,58 @@ public class TelaDespesa extends javax.swing.JFrame {
                     .addComponent(scrDescricaoDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDespesaLayout.createSequentialGroup()
+                    .addComponent(bntSalvarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDespesaLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bntNovoDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(bntEditarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(bntExcluirDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bntCancelarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(bntSalvarDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bntExcluirDespesa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bntCancelarDespesa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bntSairDespesa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlDespesaLayout.setVerticalGroup(
             pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDespesaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDespesaLayout.createSequentialGroup()
-                        .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDespesaLayout.createSequentialGroup()
-                                .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(bntCancelarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlDespesaLayout.createSequentialGroup()
-                                        .addComponent(lblValorDespesa)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblData)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bntExcluirDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(pnlDespesaLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(bntSairDespesa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bntExcluirDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblDescricaoDespesa)))
-                            .addGroup(pnlDespesaLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(bntNovoDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bntEditarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(bntSalvarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
+                                    .addComponent(bntCancelarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlDespesaLayout.createSequentialGroup()
+                                        .addComponent(bntNovoDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(bntEditarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
+                        .addComponent(bntSalvarDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlDespesaLayout.createSequentialGroup()
-                        .addComponent(entValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(entDataDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrDescricaoDespesa)
-                        .addGap(12, 12, 12))))
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDespesaLayout.createSequentialGroup()
+                                .addComponent(lblValorDespesa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblDescricaoDespesa)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(pnlDespesaLayout.createSequentialGroup()
+                                .addComponent(entValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(entDataDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(scrDescricaoDespesa)))))
+                .addGap(12, 12, 12))
         );
 
         tblDespesa.setModel(new javax.swing.table.DefaultTableModel(
@@ -206,7 +257,7 @@ public class TelaDespesa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addComponent(scrDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -219,28 +270,200 @@ public class TelaDespesa extends javax.swing.JFrame {
     }//GEN-LAST:event_entValorDespesaActionPerformed
 
     private void bntNovoDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNovoDespesaActionPerformed
+        botao = "novo";
+        
+        // Botões habilitados/desbilitados; 
+        bntNovoDespesa.setEnabled(false);
+        bntSalvarDespesa.setEnabled(true);
+        bntCancelarDespesa.setEnabled(true);
+        bntEditarDespesa.setEnabled(false);
+        bntExcluirDespesa.setEnabled(false);
+        
+        // Entradas habilitadas/desbilitadas; 
+        entValorDespesa.setEnabled(true);
+        entDataDespesa.setEnabled(true);
+        entDescricaoDespesa.setEnabled(true);
 
+        // Definir o texto inicial;    
+        entValorDespesa.setText("");
+        entDataDespesa.setText("");
+        entDescricaoDespesa.setText("");
+        
+        // Definir o foco do cursor;
+        entValorDespesa.requestFocus();
     }//GEN-LAST:event_bntNovoDespesaActionPerformed
 
     private void bntSalvarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarDespesaActionPerformed
+        // Verificar se os campos estão preenchidos ao tentar salvar;
+        if (entValorDespesa.getText().equals("") || entDataDespesa.getText().equals("") || entDescricaoDespesa.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Todos os campos de texto devem ser preenchidos","Mensagem",JOptionPane.PLAIN_MESSAGE);
+        }
+        
+        // Tranformar os tipos
+        else{
+            double valor = Double.parseDouble(entValorDespesa.getText());
+            String data = entDataDespesa.getText();
+            String descricao = entDescricaoDespesa.getText();
+            
+            // Verificar se é "novo" ou "editar";
+            // Criar a despesa de fato;
+            
+            if (botao.equals("novo")){
+                Despesa item = new Despesa();
+                
+                item.setValor(valor);
+                item.setData(data);
+                item.setDescricao(descricao);
+                
+                listaDespesa.add(item);
+                
+                JOptionPane.showMessageDialog(null,"Despesa registrada com sucesso!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            
+            }
+            
+            else if (botao.equals("editar")){
+                int index = tblDespesa.getSelectedRow();
+                
+                listaDespesa.get(index).setValor(valor);
+                listaDespesa.get(index).setData(data);
+                listaDespesa.get(index).setDescricao(descricao);
+               
+            JOptionPane.showMessageDialog(null,"Despesa editada com sucesso!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            atualizarTabelaDespesa();
 
+            
+            // Botões habilitados/desbilitados; 
+            bntNovoDespesa.setEnabled(true);
+            bntSalvarDespesa.setEnabled(false);
+            bntCancelarDespesa.setEnabled(false);
+            bntEditarDespesa.setEnabled(false);
+            bntExcluirDespesa.setEnabled(false);
+
+            // Entradas habilitadas/desbilitadas; 
+            entValorDespesa.setEnabled(false);
+            entDataDespesa.setEnabled(false);
+            entDescricaoDespesa.setEnabled(false);
+
+            // Definir o texto inicial;    
+            entValorDespesa.setText("");
+            entDataDespesa.setText("");
+            entDescricaoDespesa.setText("");
+        } 
     }//GEN-LAST:event_bntSalvarDespesaActionPerformed
 
     private void bntCancelarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCancelarDespesaActionPerformed
+        // Botões habilitados/desbilitados; 
+        bntNovoDespesa.setEnabled(true);
+        bntSalvarDespesa.setEnabled(false);
+        bntCancelarDespesa.setEnabled(false);
+        bntEditarDespesa.setEnabled(false);
+        bntExcluirDespesa.setEnabled(false);
+        
+        // Entradas habilitadas/desbilitadas; 
+        entValorDespesa.setEnabled(false);
+        entDataDespesa.setEnabled(false);
+        entDescricaoDespesa.setEnabled(false);
 
+        // Definir o texto inicial;    
+        entValorDespesa.setText("");
+        entDataDespesa.setText("");
+        entDescricaoDespesa.setText("");
     }//GEN-LAST:event_bntCancelarDespesaActionPerformed
 
     private void bntEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarDespesaActionPerformed
+        botao = "editar";
+        
+        // Botões habilitados/desbilitados; 
+        bntNovoDespesa.setEnabled(false);
+        bntSalvarDespesa.setEnabled(true);
+        bntCancelarDespesa.setEnabled(true);
+        bntEditarDespesa.setEnabled(false);
+        bntExcluirDespesa.setEnabled(false);
+        
+        // Entradas habilitadas/desbilitadas; 
+        entValorDespesa.setEnabled(true);
+        entDataDespesa.setEnabled(true);
+        entDescricaoDespesa.setEnabled(true);
 
+        // Definir o texto inicial; corrigir comecar com o item
+        entValorDespesa.setText("");
+        entDataDespesa.setText("");
+        entDescricaoDespesa.setText("");
+        
+        // Definir o foco do cursor;
+        entValorDespesa.requestFocus();
+        
+        // Definir o texto inicial;
+        int index = tblDespesa.getSelectedRow();
+        
+        entDataDespesa.setText(listaDespesa.get(index).getData());
+        entValorDespesa.setText(valueOf(listaDespesa.get(index).getValor()));
+        entDescricaoDespesa.setText(listaDespesa.get(index).getDescricao());
     }//GEN-LAST:event_bntEditarDespesaActionPerformed
 
     private void bntExcluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirDespesaActionPerformed
+ // Associando ao item selecionado;
+        int index = tblDespesa.getSelectedRow();
+        
+        // Excluir item da lista;
+        if (index>=0 && index<listaDespesa.size()){
+            int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja exluir a despesa?","Comfirmação", JOptionPane.YES_OPTION);
+
+            if (opcao == JOptionPane.YES_OPTION){
+                listaDespesa.remove(index);
+            
+            JOptionPane.showMessageDialog(null, "Despesa excluida com sucesso!","Messagem", JOptionPane.INFORMATION_MESSAGE);
+            }
+            atualizarTabelaDespesa();
+        }  
+        
+        // Precisa carregar tabela
+        
+        // Botões habilitados/desbilitados; 
+        bntNovoDespesa.setEnabled(true);
+        bntSalvarDespesa.setEnabled(false);
+        bntCancelarDespesa.setEnabled(false);
+        bntEditarDespesa.setEnabled(false);
+        bntExcluirDespesa.setEnabled(false);
+        
+        // Entradas habilitadas/desbilitadas; 
+        entValorDespesa.setEnabled(false);
+        entDataDespesa.setEnabled(false);
+        entDescricaoDespesa.setEnabled(false);
+
+        // Definir o texto inicial;    
+        entValorDespesa.setText("");
+        entDataDespesa.setText("");
+        entDescricaoDespesa.setText("");
 
     }//GEN-LAST:event_bntExcluirDespesaActionPerformed
 
     private void tblDespesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDespesaMouseClicked
-
+        int i = tblDespesa.getSelectedRow();
+        
+        if(i>=0 && i<listaDespesa.size()){
+            Despesa des = listaDespesa.get(i);
+            entValorDespesa.setText(String.valueOf(des.getValor())); 
+            entDataDespesa.setText(des.getData());
+            entDescricaoDespesa.setText(des.getDescricao());
+        }
+        
+        bntNovoDespesa.setEnabled(true);
+        bntSalvarDespesa.setEnabled(false);
+        bntCancelarDespesa.setEnabled(false);
+        bntEditarDespesa.setEnabled(true);
+        bntExcluirDespesa.setEnabled(true);
+        
+        entValorDespesa.setEnabled(false);
+        entDataDespesa.setEnabled(false);
+        entDescricaoDespesa.setEnabled(false);
     }//GEN-LAST:event_tblDespesaMouseClicked
+
+    private void bntSairDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSairDespesaActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_bntSairDespesaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,6 +505,7 @@ public class TelaDespesa extends javax.swing.JFrame {
     private javax.swing.JButton bntEditarDespesa;
     private javax.swing.JButton bntExcluirDespesa;
     private javax.swing.JButton bntNovoDespesa;
+    private javax.swing.JButton bntSairDespesa;
     private javax.swing.JButton bntSalvarDespesa;
     private javax.swing.JTextField entDataDespesa;
     private javax.swing.JTextArea entDescricaoDespesa;
