@@ -4,9 +4,9 @@
  */
 package telas;
 
+import Modelo.ExcelHandler;
 import java.util.List;
 import javax.swing.JOptionPane;
-import trabalhofinal.ExcelHandler;
 import trabalhofinal.Restaurante;
 
 
@@ -300,14 +300,14 @@ public class TelaRestaurante extends javax.swing.JFrame {
                 txtEndereco.setText(restaurante.getEndereco());
                 txtCnpj.setText(String.valueOf(restaurante.getCnpj()));
                 txtTelefone.setText(String.valueOf(restaurante.getTelefone()));
-
+                
                 txtNome.setEnabled(false);
                 txtDescricao.setEnabled(false);
                 txtEndereco.setEnabled(false);
                 txtCnpj.setEnabled(false);
                 txtTelefone.setEnabled(false);
                 this.setVisible(false);
-                
+                new CadastroAdm().setVisible(true);
 
             }
             } catch (NumberFormatException ex) {

@@ -8,7 +8,7 @@ import trabalhofinal.Estoque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import trabalhofinal.ExcelEstoque;
+import Modelo.ExcelEstoque;
 
 
 

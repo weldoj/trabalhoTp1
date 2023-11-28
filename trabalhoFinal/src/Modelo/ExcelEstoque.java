@@ -31,8 +31,9 @@ import trabalhofinal.Estoque;
 public class ExcelEstoque {
     
   
+    String diretorioAtual = System.getProperty("user.dir");
 
-    private static final String EXCEL_FILE_PATH = "/home/Gabriel/NetBeansProjects/trabalhoTp1/trabalhoFinal/arquivo2.xlsx";
+    String EXCEL_FILE_PATH = diretorioAtual + File.separator + "arquivo2.xlsx";
     
     //private Map<String, List<Estoque>> mapaProdutosPorTipo;
 

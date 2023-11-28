@@ -19,8 +19,9 @@ import trabalhofinal.Restaurante;
 
 
 public class ExcelHandler {
+String diretorioAtual = System.getProperty("user.dir");
 
-private static final String EXCEL_FILE_PATH = "/home/Gabriel/NetBeansProjects/trabalhoTp1/trabalhoFinal/arquivo.xlsx";
+String EXCEL_FILE_PATH = diretorioAtual + File.separator + "arquivo.xlsx";
 
     public List<Restaurante> lerDadosDoArquivo() {
         List<Restaurante> restaurantes = new ArrayList<>();
@@ -128,7 +129,7 @@ private static final String EXCEL_FILE_PATH = "/home/Gabriel/NetBeansProjects/tr
         try (FileOutputStream outputStream = new FileOutputStream(file)) {
             workbook.write(outputStream);
         }
-    } catch (IOException | EncryptedDocumentException | InvalidFormatException e) {
+    } catch (IOException | EncryptedDocumentException  e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(null, "Erro ao salvar no arquivo Excel", "Erro", JOptionPane.ERROR_MESSAGE);
     } finally {
@@ -164,7 +165,7 @@ public void excluirDadosDoArquivo(List<Restaurante> restaurantes, long cnpjParaE
                 workbook.write(outputStream);
             }
         }
-    } catch (IOException | EncryptedDocumentException | InvalidFormatException e) {
+    } catch (IOException | EncryptedDocumentException  e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(null, "Erro ao excluir dados no arquivo Excel", "Erro", JOptionPane.ERROR_MESSAGE);
     } finally {
