@@ -4,18 +4,55 @@
  */
 package telas;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import trabalhofinal.ExcelHandler;
+import trabalhofinal.Restaurante;
+
+
 /**
  *
  * @author Gabriel
  */
 public class TelaRestaurante extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaRestaurante
-     */
+    Restaurante restaurante;
+    String botao = "";
+    
+    private ExcelHandler excelHandler;
+   
     public TelaRestaurante() {
         initComponents();
+        
+        restaurante = new Restaurante();
+        excelHandler = new ExcelHandler();
+        // Carregar dados ao abrir a tela
+        carregarDadosAoAbrir();
+        
+        
+      }
+     private void carregarDadosAoAbrir() {
+        List<Restaurante> restaurantes = excelHandler.lerDadosDoArquivo();
+
+        if (!restaurantes.isEmpty()) {
+            restaurante = restaurantes.get(0); // Assumindo que há apenas um restaurante no arquivo
+            txtNome.setEnabled(false);
+            txtDescricao.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtCnpj.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            carregarCamposRestaurante();
+        }
     }
+
+    private void carregarCamposRestaurante() {
+        txtNome.setText(restaurante.getNomeEmp());
+        txtDescricao.setText(restaurante.getDescricao());
+        txtEndereco.setText(restaurante.getEndereco());
+        txtCnpj.setText(String.valueOf(restaurante.getCnpj()));
+        txtTelefone.setText(String.valueOf(restaurante.getTelefone()));
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,13 +70,13 @@ public class TelaRestaurante extends javax.swing.JFrame {
         lblDescricao = new javax.swing.JLabel();
         lblTelefone = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        txtCnpj = new javax.swing.JTextField();
         txtEndereco = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
         txtTelefone = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtCnpj = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Restaurante");
@@ -74,6 +111,12 @@ public class TelaRestaurante extends javax.swing.JFrame {
             }
         });
 
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefoneActionPerformed(evt);
+            }
+        });
+
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/salvar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +141,12 @@ public class TelaRestaurante extends javax.swing.JFrame {
             }
         });
 
+        try {
+            txtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##############")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,10 +166,10 @@ public class TelaRestaurante extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                                 .addComponent(txtEndereco))
-                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addComponent(btnSalvar)
@@ -195,16 +244,84 @@ public class TelaRestaurante extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescricaoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        botao = "editar";
+        
+        txtNome.setEnabled(true);
+        txtDescricao.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        txtCnpj.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        
+      
+        try {
+            List<Restaurante> restaurantes = excelHandler.lerDadosDoArquivo();
+            if (txtNome.getText().equals("") ||txtDescricao.getText().equals("") ||txtEndereco.getText().equals("") ||txtCnpj.getText().equals("") ||txtTelefone.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Messagem", JOptionPane.PLAIN_MESSAGE);
+            }
+            
+            else {
+                String nome = txtNome.getText();
+                String descricao = txtDescricao.getText();
+                String endereco = txtEndereco.getText();
+                long cnpj = Long.parseLong(txtCnpj.getText());
+                long telefone = Long.parseLong(txtTelefone.getText());
+                if (!botao.equals("editar")) {
+                
+                
+                    restaurante = new Restaurante(nome, cnpj, endereco, descricao, telefone);
+                    
+                    restaurantes.add(restaurante);
+                    
+                }
+                else if (botao.equals("editar")) {
+                    restaurantes.remove(restaurante);
+                    excelHandler.excluirDadosDoArquivo(restaurantes, cnpj);
+                    
+                    restaurante.setNomeEmp(nome);
+                    restaurante.setDescricao(descricao);
+                    restaurante.setEndereco(endereco);
+                    restaurante.setCnpj(cnpj);
+                    restaurante.setTelefone(telefone);
+                    restaurantes.add(restaurante);
+                    
+                  
+                    
+                }
+                
+                excelHandler.salvarDadosNoArquivo(restaurantes);
+            
+                txtNome.setText(restaurante.getNomeEmp());
+                txtDescricao.setText(restaurante.getDescricao());
+                txtEndereco.setText(restaurante.getEndereco());
+                txtCnpj.setText(String.valueOf(restaurante.getCnpj()));
+                txtTelefone.setText(String.valueOf(restaurante.getTelefone()));
+
+                txtNome.setEnabled(false);
+                txtDescricao.setEnabled(false);
+                txtEndereco.setEnabled(false);
+                txtCnpj.setEnabled(false);
+                txtTelefone.setEnabled(false);
+                this.setVisible(false);
+                
+
+            }
+            } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "Certifique-se de que o CNPJ e telefone sejam números.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,7 +368,7 @@ public class TelaRestaurante extends javax.swing.JFrame {
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTelefone;
-    private javax.swing.JTextField txtCnpj;
+    private javax.swing.JFormattedTextField txtCnpj;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;

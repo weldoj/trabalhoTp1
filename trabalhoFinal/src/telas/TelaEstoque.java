@@ -8,6 +8,7 @@ import trabalhofinal.Estoque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import trabalhofinal.ExcelEstoque;
 
 
 
@@ -20,12 +21,17 @@ public class TelaEstoque extends javax.swing.JFrame {
     private Map<String, List<Estoque>> mapaProdutosPorTipo;
     
     private String tipoAlimentoSelecionado = "";
+    private ExcelEstoque excelEstoque;
+   
     
     String botao;
     
    public TelaEstoque() {
        initComponents();
+       inicializarDados();
        mapaProdutosPorTipo = new HashMap<>();
+       excelEstoque =new  ExcelEstoque();
+       lerDadosDoArquivo();
        
        txtCusto.setEnabled(false);
        snrQuantidade.setEnabled(false);
@@ -171,6 +177,23 @@ public class TelaEstoque extends javax.swing.JFrame {
     private void atualizarTituloTabela(String tipoAlimento) {
         lblTituloTabela.setText("Tipo de Alimento Atual: " + tipoAlimento);
 }
+    
+    private void salvarDadosNoArquivo(Map<String, List<Estoque>> mapaProdutosPorTipo) {
+        ExcelEstoque excelEstoque = new ExcelEstoque();
+        excelEstoque.salvarDadosNoArquivo(mapaProdutosPorTipo);
+    }
+    
+      private void inicializarDados() {
+        mapaProdutosPorTipo = new HashMap<>();
+        excelEstoque = new ExcelEstoque();
+        lerDadosDoArquivo();  // Chame o método lerDadosDoArquivo após a inicialização
+        // Restante do seu código de inicialização...
+    }
+
+    private void lerDadosDoArquivo() {
+       
+        mapaProdutosPorTipo = excelEstoque.lerDadosDoArquivo();
+    }
     /*private void mostrarTabela() {
         // Ajustar o tamanho do layout para se adequar à tabela
         //int larguraTabela = tabela.getPreferredSize().width;
@@ -718,7 +741,7 @@ public class TelaEstoque extends javax.swing.JFrame {
                
                 
        
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar")) {
             
             limparCampos();
            
@@ -742,6 +765,28 @@ public class TelaEstoque extends javax.swing.JFrame {
 
 
            txtCodigo.requestFocus();
+        }
+        else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnCarnes.setEnabled(false);
+           btnBebidas.setEnabled(false);
+           btnGraoseCereais.setEnabled(false);
+           btnProdutosdePadaria.setEnabled(false);
+           btnProdutosLacteos.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
        
         
@@ -786,7 +831,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             desabilitarBotoesTipoDeAlimento();
             }
                 
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar") ) {
             
             limparCampos();
 
@@ -807,6 +852,28 @@ public class TelaEstoque extends javax.swing.JFrame {
            lblTituloTabela.setVisible(true);
 
            txtCodigo.requestFocus();
+        }
+        else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnCarnes.setEnabled(false);
+           btnBebidas.setEnabled(false);
+           btnVegetais.setEnabled(false);
+           btnProdutosdePadaria.setEnabled(false);
+           btnProdutosLacteos.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
 
     }//GEN-LAST:event_btnGraoseCereaisActionPerformed
@@ -848,7 +915,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             desabilitarBotoesTipoDeAlimento();
             }
            
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar")) {
             
             limparCampos();
             // Habilitar botoes
@@ -868,6 +935,28 @@ public class TelaEstoque extends javax.swing.JFrame {
            lblTituloTabela.setVisible(true);
 
            txtCodigo.requestFocus();
+        }
+           else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnVegetais.setEnabled(false);
+           btnBebidas.setEnabled(false);
+           btnGraoseCereais.setEnabled(false);
+           btnProdutosdePadaria.setEnabled(false);
+           btnProdutosLacteos.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
 
                                            
@@ -912,7 +1001,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             }
             
                
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar") ) {
             
             limparCampos();
 
@@ -933,6 +1022,29 @@ public class TelaEstoque extends javax.swing.JFrame {
            lblTituloTabela.setVisible(true);
 
            txtCodigo.requestFocus();
+        }
+        
+        else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnCarnes.setEnabled(false);
+           btnBebidas.setEnabled(false);
+           btnGraoseCereais.setEnabled(false);
+           btnProdutosdePadaria.setEnabled(false);
+           btnVegetais.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
      
     }//GEN-LAST:event_btnProdutosLacteosActionPerformed
@@ -974,7 +1086,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             desabilitarBotoesTipoDeAlimento();
         }
     
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar")) {
             
             limparCampos();
 
@@ -995,6 +1107,29 @@ public class TelaEstoque extends javax.swing.JFrame {
            lblTituloTabela.setVisible(true);
 
            txtCodigo.requestFocus();
+        }
+        
+        else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnCarnes.setEnabled(false);
+           btnVegetais.setEnabled(false);
+           btnGraoseCereais.setEnabled(false);
+           btnProdutosdePadaria.setEnabled(false);
+           btnProdutosLacteos.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
      
     }//GEN-LAST:event_btnBebidasActionPerformed
@@ -1076,7 +1211,8 @@ public class TelaEstoque extends javax.swing.JFrame {
             btnEditar.setEnabled(false);
             btnExcluir.setEnabled(false);
             
-            
+            // Atualizar o arquivo Excel
+            salvarDadosNoArquivo(mapaProdutosPorTipo);
             // Habilitar botoes
             btnAdicionar.setEnabled(true);
             btnPesquisar.setEnabled(true);
@@ -1102,6 +1238,9 @@ public class TelaEstoque extends javax.swing.JFrame {
 
     // Carregue a tabela novamente com base no tipo de alimento
     carregarTabelaProdutos(tipoAlimentoSelecionado);
+    
+     // Atualizar o arquivo Excel após excluir o produto
+        salvarDadosNoArquivo(mapaProdutosPorTipo);
         
         desabilitarCampos();
         
@@ -1319,7 +1458,7 @@ public class TelaEstoque extends javax.swing.JFrame {
             desabilitarBotoesTipoDeAlimento();
         }
     
-        if (botao.equals("adicionar") || botao.equals("editar") || botao.equals("visualizar tabela")) {
+        if (botao.equals("adicionar") || botao.equals("editar") ) {
             limparCampos();
             
 
@@ -1340,6 +1479,29 @@ public class TelaEstoque extends javax.swing.JFrame {
            lblTituloTabela.setVisible(true);
 
            txtCodigo.requestFocus();
+        }
+        
+        else if (botao.equals("visualizar tabela")){
+             limparCampos();
+           
+            // Habilitar botoes
+            btnSalvar.setEnabled(false);
+            //btnCancelar.setEnabled(true);
+
+            // Desabilitar botoes
+           btnCarnes.setEnabled(false);
+           btnBebidas.setEnabled(false);
+           btnGraoseCereais.setEnabled(false);
+           btnVegetais.setEnabled(false);
+           btnProdutosLacteos.setEnabled(false);
+
+           atualizarTituloTabela( tipoAlimentoSelecionado);
+           
+           // Tabela e titulo visivel
+           pnltabela.setVisible(true);
+           lblTituloTabela.setVisible(true);
+           //mostrarTabela();
+
         }
      
     }//GEN-LAST:event_btnProdutosdePadariaActionPerformed

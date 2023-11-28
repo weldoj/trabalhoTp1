@@ -10,6 +10,11 @@ public class Restaurante {
     private String descricao;
     private long telefone;
 
+    public Restaurante() {
+    }
+    
+    
+
     public Restaurante(String nomeEmp, long cnpj, String endereco, String descricao, long telefone) {
         this.nomeEmp = nomeEmp;
         this.cnpj = cnpj;

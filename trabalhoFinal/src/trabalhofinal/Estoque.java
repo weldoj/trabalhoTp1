@@ -78,6 +78,10 @@ public class Estoque {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
+
+    double getNome() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 
     
