@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <group/>
 =======
         <group>
@@ -17,5 +18,13 @@
             <file>file:/home/Gabriel/NetBeansProjects/trabalhoTp1/trabalhoFinal/src/trabalhofinal/ExcelHandler.java</file>
         </group>
 >>>>>>> Estoque_eventos
+=======
+        <group>
+            <file>file:/home/weldo/Área%20de%20Trabalho/TrabalhoTp1/trabalhoFinal/src/telas/TelaRestaurante.java</file>
+            <file>file:/home/weldo/Área%20de%20Trabalho/TrabalhoTp1/trabalhoFinal/src/telas/TelaPrincipal.java</file>
+            <file>file:/home/weldo/Área%20de%20Trabalho/TrabalhoTp1/trabalhoFinal/src/telas/TelaPedido.java</file>
+            <file>file:/home/weldo/Área%20de%20Trabalho/TrabalhoTp1/trabalhoFinal/src/trabalhofinal/Administrador.java</file>
+        </group>
+>>>>>>> parent of df34f64... private_xml
     </open-files>
 </project-private>
