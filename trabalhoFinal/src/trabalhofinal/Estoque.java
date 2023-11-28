@@ -11,13 +11,7 @@ public class Estoque {
     private double custo;
     private int codigo;
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+    
 
     // Construtor
     public Estoque(int codigo, String nomeProduto, int quantidade, String unidade, String validade, double custo) {
@@ -77,6 +71,17 @@ public class Estoque {
         this.validade = validade;
     }
     
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    double getNome() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 
     
