@@ -13,7 +13,7 @@ public class Funcionarios extends Pessoa {
     }
 
     
-    public Funcionarios( String nome, int id, String cpf, String cargo, float salario) {
+    public Funcionarios( String nome, String id, String cpf, String cargo, float salario) {
         super(nome, id, cpf);
         this.cargo = cargo;
         this.salario = salario;

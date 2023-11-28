@@ -511,7 +511,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
             String cpfFunc = txtCpfFunc.getText();
             
             
-            int IdFunc = Integer.parseInt(txtIDFunc.getText());
+            String IdFunc = txtIDFunc.getText();
             System.out.println(IdFunc);
             String cargo = txtCargo.getText();
             float salario = Float.parseFloat(txtSalario.getText());

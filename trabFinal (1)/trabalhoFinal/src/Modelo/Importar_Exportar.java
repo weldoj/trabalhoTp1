@@ -31,7 +31,7 @@ public class Importar_Exportar {
                 Row row = rowIterator.next();
                 Funcionarios funcionario = new Funcionarios();
 
-                funcionario.setId((int) row.getCell(0).getNumericCellValue());
+                funcionario.setId(row.getCell(0).getStringCellValue());
                 funcionario.setNome(row.getCell(1).getStringCellValue());
                 funcionario.setCpf(row.getCell(2).getStringCellValue());
                 funcionario.setCargo(row.getCell(3).getStringCellValue());

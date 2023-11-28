@@ -279,7 +279,7 @@ public class CadastroAdm extends javax.swing.JFrame {
                 String nomeAdm = txtNomeAdm.getText();
                 String EmailAdm = txtEmailAdm.getText();
                 String cpfAdm = txtCpfAdm.getText();
-                int IDADm = Integer.parseInt(txtIdAdm.getText());
+                String IDADm = txtIdAdm.getText();
                 String dataNascimento = txtDataNascimento.getText();
                 String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
                 

@@ -28,12 +28,12 @@ public class Importar_ExportarDadosAdm {
 
                 // Verifica se as células não são nulas antes de acessar
                 if (row != null && row.getCell(0) != null && row.getCell(1) != null && row.getCell(2) != null
-                        && row.getCell(3) != null && row.getCell(4) != null && row.getCell(5) != null) {
+                        && row.getCell(4) != null && row.getCell(5) != null) {
 
                     adm.setNome(row.getCell(0).getStringCellValue());
                     adm.setEmail(row.getCell(1).getStringCellValue());
                     adm.setCpf(row.getCell(2).getStringCellValue());
-                    adm.setId((int) row.getCell(3).getNumericCellValue());
+                    adm.setId(row.getCell(3).getStringCellValue());
                     adm.setDataNascimento(row.getCell(4).getStringCellValue());
                     adm.setSenha(row.getCell(5).getStringCellValue());
                 } else {

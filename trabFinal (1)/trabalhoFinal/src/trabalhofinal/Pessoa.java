@@ -2,13 +2,13 @@ package trabalhofinal;
 
 public class Pessoa {
     private String nome;
-    private int id;
+    private String id;
     private String cpf;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, int id, String cpf) {
+    public Pessoa(String nome, String id, String cpf) {
         this.nome = nome;
         this.id = id;
         this.cpf = cpf;
@@ -22,11 +22,11 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

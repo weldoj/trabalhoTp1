@@ -4,25 +4,42 @@
  */
 package telas;
 
-import trabalhofinal.ControleDeLogin;
-
-
-
 /**
  *
  * @author aluno
  */
+import Modelo.Importar_Exportar;
+import java.io.File;
+import javax.swing.JOptionPane;
+import trabalhofinal.Administrador;
+import trabalhofinal.ControleDeLogin;
+import Modelo.Importar_ExportarDadosAdm;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import trabalhofinal.Administrador;
+import trabalhofinal.Funcionarios;
+
 public class TelaPrincipal extends javax.swing.JFrame {
 
     
     
     //verefica se adm ou funcionario:
     
+    String diretorioAtual = System.getProperty("user.dir");
+    String caminhoArquivo = diretorioAtual + File.separator + "DadosProjetoTp1.xlsx";
+    static ArrayList<Funcionarios> listaFuncionarios;
+    Administrador adm;
     
     public TelaPrincipal() {
         
         initComponents();
-        //btnEntrar.setEnabled(false);
+        adm = new Administrador();
+        adm = Importar_ExportarDadosAdm.importData(caminhoArquivo);
+        listaFuncionarios = new ArrayList<>();
+        listaFuncionarios = Importar_Exportar.importData(caminhoArquivo);
+        
         
     }
 
@@ -159,25 +176,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
                                          
-        ControleDeLogin controle = new ControleDeLogin();
 
-        if (controle.cpfSalvoAdm() != null &&
-            controle.nomeSalvoAdm() != null &&
-            controle.senhaSalvoAdm() != null &&
-            txtCpf.getText().equals(controle.cpfSalvoAdm()) &&
-            
-            txtSenha.getPassword().equals(controle.senhaSalvoAdm())) {
-            new Adm().setVisible(true);
-        } else if (controle.cpfSalvoFunc() != null &&
-                   controle.nomeSalvoFunc() != null &&
-                   controle.senhaSalvoFunc() != null &&
-                   controle.cpfSalvoFunc().contains(txtCpf.getText()) &&
-                   
-                   controle.senhaSalvoFunc().contains(txtSenha.getText())) {
+        if (txtCpf.getText().equals(adm.getCpf()) && adm.getSenha().equals(String.valueOf(txtSenha.getPassword()))) {
+                new Adm().setVisible(true);
+        }
+        else{
             new TelaPedido().setVisible(true);
-            
-
-}
+        }
 
                  
     }//GEN-LAST:event_btnEntrarActionPerformed
