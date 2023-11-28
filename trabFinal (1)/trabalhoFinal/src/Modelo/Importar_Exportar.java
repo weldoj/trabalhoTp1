@@ -21,7 +21,7 @@ public class Importar_Exportar {
             workbook = WorkbookFactory.create(new File(caminhoArquivoExcel));
             System.out.println("Arquivo aberto com sucesso.");
 
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheetAt(1);
 
             Iterator<Row> rowIterator = sheet.iterator();
 
@@ -60,7 +60,7 @@ public class Importar_Exportar {
     String caminhoArquivoSaida = caminhoArquivoExcel.replace(".xlsx", "_saida.xlsx");
 
     try (Workbook workbook = WorkbookFactory.create(new File(caminhoArquivoExcel))) {
-        Sheet sheet = workbook.getSheetAt(0);
+        Sheet sheet = workbook.getSheetAt(1);
 
         // Limpa todas as linhas, mantendo o cabeçalho
         int lastRowNum = sheet.getLastRowNum();

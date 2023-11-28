@@ -26,13 +26,14 @@ public class CadastroAdm extends javax.swing.JFrame {
      * Creates new form CadastroAdm
      */
     String diretorioAtual = System.getProperty("user.dir");
-    String caminhoArquivo = diretorioAtual + File.separator + "DadosAdm.xlsx";
-    Administrador adm = new Administrador();
-    
+    String caminhoArquivo = diretorioAtual + File.separator + "DadosProjetoTp1.xlsx";
+    Administrador adm;
     public CadastroAdm() {
-        Importar_ExportarDadosAdm.importData(caminhoArquivo);
+        
         System.out.println(caminhoArquivo);
         initComponents();
+        adm = new Administrador();
+        adm = Importar_ExportarDadosAdm.importData(caminhoArquivo);
         
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(false);
@@ -269,53 +270,55 @@ public class CadastroAdm extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
-        if (txtEmailAdm.getText().equals("") || txtIdAdm.getText().equals("") || txtNomeAdm.getText().equals("") || txtSenhaAdm.getPassword().equals("")){
-            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!");
-        }
-        else{
-            // pegando as mensagens do campo de texto:
-            String nomeAdm = txtNomeAdm.getText();
-            String EmailAdm = txtEmailAdm.getText();
-            String cpfAdm = txtCpfAdm.getText();
-            int IDADm = Integer.parseInt(txtIdAdm.getText());
-            String dataNascimento = txtDataNascimento.getText();
-            String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
-
-            //passando as menssagens para a classe Administrador:
-
-            adm.setNome(nomeAdm);
-            adm.setEmail(EmailAdm);
-            adm.setCpf(cpfAdm);
-            adm.setId(IDADm);
-            adm.setDataNascimento(dataNascimento);
-            adm.setSenha(senhaAdm);
-
-            ControleDeLogin.pegaAdmCpf(adm);
-            ControleDeLogin.pegaAdmNome(adm);
-            ControleDeLogin.pegaAdmSenha(adm);
-
-            //deixando as menssagens salvas nos campos:
-            txtNomeAdm.setEnabled(false);
-            txtEmailAdm.setEnabled(false);
-            txtCpfAdm.setEnabled(false);
-            txtIdAdm.setEnabled(false);
-            txtDataNascimento.setEnabled(false);
-            txtSenhaAdm.setEnabled(false);
-
-            //habilitando botões:
-            btnEditar.setEnabled(true);
-            btnSalvar.setEnabled(false);
-
-            JOptionPane.showMessageDialog(null, "Administrador cadastrado com sucesso!");
-        }
         
-        try {
-            Importar_ExportarDadosAdm.exportData(caminhoArquivo, adm);
-        } catch (IOException ex) {
-            Logger.getLogger(CadastroAdm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            if (txtEmailAdm.getText().equals("") || txtIdAdm.getText().equals("") || txtNomeAdm.getText().equals("") || txtSenhaAdm.getPassword().equals("")){
+                JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!");
+            }
+            else{
+                // pegando as mensagens do campo de texto:
+                String nomeAdm = txtNomeAdm.getText();
+                String EmailAdm = txtEmailAdm.getText();
+                String cpfAdm = txtCpfAdm.getText();
+                int IDADm = Integer.parseInt(txtIdAdm.getText());
+                String dataNascimento = txtDataNascimento.getText();
+                String senhaAdm = String.valueOf(txtSenhaAdm.getPassword());
+                
+                //passando as menssagens para a classe Administrador:
+                
+                adm.setNome(nomeAdm);
+                adm.setEmail(EmailAdm);
+                adm.setCpf(cpfAdm);
+                adm.setId(IDADm);
+                adm.setDataNascimento(dataNascimento);
+                adm.setSenha(senhaAdm);
+                
+                ControleDeLogin.pegaAdmCpf(adm);
+                ControleDeLogin.pegaAdmNome(adm);
+                ControleDeLogin.pegaAdmSenha(adm);
+                
+                //deixando as menssagens salvas nos campos:
+                txtNomeAdm.setEnabled(false);
+                txtEmailAdm.setEnabled(false);
+                txtCpfAdm.setEnabled(false);
+                txtIdAdm.setEnabled(false);
+                txtDataNascimento.setEnabled(false);
+                txtSenhaAdm.setEnabled(false);
+                
+                //habilitando botões:
+                btnEditar.setEnabled(true);
+                btnSalvar.setEnabled(false);
+                
+                JOptionPane.showMessageDialog(null, "Administrador cadastrado com sucesso!");
+                
+                try {
+                    Importar_ExportarDadosAdm.exportDataAdm(caminhoArquivo, adm);
+                } catch (IOException ex) {
+                    Logger.getLogger(CadastroAdm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+              
     }//GEN-LAST:event_btnSalvarActionPerformed
-
+    
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // habilitando os campos de texto:
         txtNomeAdm.setEnabled(true);

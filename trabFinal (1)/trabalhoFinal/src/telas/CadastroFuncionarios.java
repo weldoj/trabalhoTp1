@@ -29,7 +29,7 @@ public class CadastroFuncionarios extends javax.swing.JFrame {
     int iPesquisar;
     
     String diretorioAtual = System.getProperty("user.dir");
-    String caminhoArquivo = diretorioAtual + File.separator + "TrabalhoTp1.xlsx";
+    String caminhoArquivo = diretorioAtual + File.separator + "DadosProjetoTp1.xlsx";
     
 
 
